@@ -1,1376 +1,1071 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#07070C">
-<meta name="color-scheme" content="dark">
-<title>Brian Gicaro D. — WordPress &amp; Elementor Developer · SEO · GHL Automation</title>
-<meta name="description" content="Brian Gicaro D. — WordPress Elementor Developer, SEO Specialist, GoHighLevel Automation, Graphic Design &amp; Social Media Marketing. Portfolio and professional experience.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-<style>
-/* ============================================================
-   TOKENS
-   ============================================================ */
-:root{
-  --bg:#07070C;
-  --bg-2:#0B0B13;
-  --surface:#101019;
-  --surface-2:#16161F;
-
-  --line:rgba(255,255,255,.075);
-  --line-2:rgba(255,255,255,.14);
-
-  --ink:#F2F2F7;
-  --ink-2:#9E9EB4;
-  --ink-3:#6A6A80;
-
-  --pink:#FF3D8A;
-  --violet:#7C5CFF;
-  --cyan:#3DD8FF;
-  --green:#3FE0A0;
-
-  --grad:linear-gradient(110deg,#FF3D8A 0%,#7C5CFF 52%,#3DD8FF 100%);
-  --grad-soft:linear-gradient(135deg,rgba(255,61,138,.12),rgba(124,92,255,.12));
-
-  --r-xl:22px;
-  --r-lg:16px;
-  --r-md:12px;
-  --r-pill:999px;
-
-  --max:1120px;
-  --pad:clamp(20px,4vw,32px);
-
-  --shadow-sm:0 1px 0 rgba(255,255,255,.04) inset, 0 12px 30px -18px rgba(0,0,0,.9);
-  --shadow-lg:0 0 0 1px rgba(255,255,255,.05), 0 32px 70px -32px rgba(124,92,255,.45);
-
-  --ease:cubic-bezier(.16,1,.3,1);
-}
-
-/* ============================================================
-   BASE
-   ============================================================ */
-*,*::before,*::after{box-sizing:border-box}
-
-html{
-  scroll-behavior:smooth;
-  -webkit-text-size-adjust:100%;
-}
-
-body{
-  margin:0;
-  background:
-    radial-gradient(900px 480px at 88% -10%, rgba(124,92,255,.20), transparent 62%),
-    radial-gradient(760px 420px at 4% 4%, rgba(255,61,138,.12), transparent 60%),
-    var(--bg);
-  color:var(--ink);
-  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  font-size:16px;
-  line-height:1.65;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  overflow-x:hidden;
-}
-
-::selection{background:rgba(124,92,255,.4);color:#fff}
-
-img{max-width:100%;display:block;height:auto}
-a{color:inherit;text-decoration:none}
-ul{margin:0;padding:0;list-style:none}
-h1,h2,h3,h4,p{margin:0}
-button,input{font:inherit}
-
-.mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,monospace}
-.display{font-family:"Space Grotesk",Inter,sans-serif}
-
-.wrap{
-  width:100%;
-  max-width:var(--max);
-  margin-inline:auto;
-  padding-inline:var(--pad);
-}
-
-:focus-visible{
-  outline:2px solid var(--violet);
-  outline-offset:3px;
-  border-radius:8px;
-}
-
-.skip{
-  position:fixed;left:-999px;top:0;z-index:999;
-  background:var(--ink);color:var(--bg);
-  padding:12px 18px;border-radius:0 0 10px 0;font-weight:600;
-}
-.skip:focus{left:0}
-
-/* faint grid texture */
-.grid-overlay{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
-  background-image:
-    linear-gradient(rgba(255,255,255,.024) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.024) 1px,transparent 1px);
-  background-size:72px 72px;
-  -webkit-mask-image:radial-gradient(1000px 620px at 62% 0%,#000 8%,transparent 72%);
-  mask-image:radial-gradient(1000px 620px at 62% 0%,#000 8%,transparent 72%);
-}
-
-/* ============================================================
-   NAV
-   ============================================================ */
-.nav{
-  position:sticky;top:0;z-index:100;
-  background:rgba(7,7,12,.72);
-  backdrop-filter:blur(18px) saturate(160%);
-  -webkit-backdrop-filter:blur(18px) saturate(160%);
-  border-bottom:1px solid var(--line);
-}
-.nav-inner{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:20px;height:68px;
-}
-.brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-.01em}
-.brand-mark{
-  width:32px;height:32px;border-radius:10px;
-  background:var(--grad);
-  display:grid;place-items:center;
-  font-family:"Space Grotesk",sans-serif;
-  font-size:13px;font-weight:700;color:#08080D;
-  flex:none;
-}
-.brand-name{font-family:"Space Grotesk",sans-serif;font-size:15.5px}
-.brand-name span{color:var(--pink)}
-
-.nav-links{display:flex;align-items:center;gap:4px}
-.nav-links a{
-  font-size:13.5px;color:var(--ink-2);
-  padding:8px 13px;border-radius:var(--r-pill);
-  transition:color .2s ease,background .2s ease;
-}
-.nav-links a:hover{color:var(--ink);background:rgba(255,255,255,.05)}
-
-.nav-cta{
-  display:inline-flex;align-items:center;gap:7px;
-  font-size:13px;font-weight:600;
-  padding:9px 17px;border-radius:var(--r-pill);
-  background:var(--grad);color:#08080D;
-  transition:transform .25s var(--ease),box-shadow .25s ease;
-  white-space:nowrap;
-}
-.nav-cta:hover{transform:translateY(-2px);box-shadow:0 12px 26px -12px rgba(255,61,138,.7)}
-
-/* ============================================================
-   HERO
-   ============================================================ */
-.hero{padding:clamp(52px,8vw,92px) 0 clamp(48px,7vw,84px);position:relative;z-index:2}
-.hero-grid{
-  display:grid;
-  grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);
-  gap:clamp(32px,5vw,64px);
-  align-items:center;
-}
-
-.availability{
-  display:inline-flex;align-items:center;gap:9px;
-  font-family:"JetBrains Mono",monospace;
-  font-size:11px;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--ink-2);
-  padding:7px 15px 7px 12px;
-  border:1px solid var(--line-2);
-  border-radius:var(--r-pill);
-  background:rgba(255,255,255,.025);
-  margin-bottom:26px;
-}
-.status-dot{
-  width:7px;height:7px;border-radius:50%;background:var(--green);flex:none;
-  box-shadow:0 0 0 3px rgba(63,224,160,.14),0 0 12px rgba(63,224,160,.7);
-  animation:pulse 2.6s ease-in-out infinite;
-}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-
-.hero h1{
-  font-family:"Space Grotesk",sans-serif;
-  font-weight:700;
-  font-size:clamp(36px,5.2vw,60px);
-  line-height:1.06;
-  letter-spacing:-.035em;
-  margin-bottom:22px;
-}
-.hero h1 .grad{
-  background:var(--grad);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-
-.role-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:26px}
-.role-tag{
-  font-family:"JetBrains Mono",monospace;
-  font-size:11px;letter-spacing:.01em;
-  padding:7px 13px;border-radius:var(--r-pill);
-  border:1px solid var(--line);
-  background:var(--surface);
-  color:var(--ink-2);
-  transition:border-color .25s ease,color .25s ease,transform .25s var(--ease);
-}
-.role-tag:hover{transform:translateY(-2px);border-color:rgba(124,92,255,.5);color:var(--ink)}
-
-.lede{
-  font-size:15.5px;
-  color:var(--ink-2);
-  max-width:62ch;
-  margin-bottom:30px;
-}
-.lede strong{color:var(--ink);font-weight:600}
-
-.cta-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:34px}
-
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  padding:13px 22px;border-radius:var(--r-pill);
-  font-size:14px;font-weight:600;
-  border:1px solid transparent;
-  transition:transform .25s var(--ease),box-shadow .25s ease,border-color .25s ease,background .25s ease;
-  white-space:nowrap;
-}
-.btn-primary{
-  background:var(--grad);color:#08080D;
-  box-shadow:0 10px 28px -14px rgba(255,61,138,.75);
-}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 34px -14px rgba(124,92,255,.8)}
-.btn-ghost{
-  border-color:var(--line-2);color:var(--ink);
-  background:rgba(255,255,255,.02);
-}
-.btn-ghost:hover{transform:translateY(-2px);border-color:rgba(124,92,255,.6);background:rgba(124,92,255,.09)}
-
-.facts{
-  display:flex;flex-wrap:wrap;gap:10px 26px;
-  padding-top:26px;border-top:1px solid var(--line);
-}
-.fact{display:flex;flex-direction:column;gap:2px}
-.fact dt{
-  font-family:"JetBrains Mono",monospace;
-  font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);
-}
-.fact dd{margin:0;font-size:13.5px;font-weight:600;color:var(--ink)}
-
-/* PROFILE CARD */
-.profile-card{
-  position:relative;
-  border-radius:var(--r-xl);
-  background:linear-gradient(180deg,var(--surface),var(--surface-2));
-  border:1px solid var(--line);
-  box-shadow:var(--shadow-lg);
-  overflow:hidden;
-  transition:transform .5s var(--ease),box-shadow .5s ease;
-}
-.profile-card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 0 0 1px rgba(255,255,255,.07),0 40px 80px -34px rgba(124,92,255,.6);
-}
-.profile-card::before{
-  content:"";position:absolute;inset:0;border-radius:var(--r-xl);
-  padding:1px;
-  background:var(--grad);background-size:250% 250%;
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;mask-composite:exclude;
-  opacity:.45;pointer-events:none;
-  animation:shimmer 8s ease-in-out infinite;
-}
-@keyframes shimmer{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
-
-.profile-photo{position:relative;aspect-ratio:1/1;overflow:hidden;background:var(--surface-2)}
-.profile-photo img{
-  width:100%;height:100%;object-fit:cover;
-  transition:transform .8s var(--ease);
-}
-.profile-card:hover .profile-photo img{transform:scale(1.045)}
-.profile-photo::after{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,transparent 46%,rgba(7,7,12,.85) 100%);
-}
-.photo-badge{
-  position:absolute;top:14px;right:14px;z-index:3;
-  display:flex;align-items:center;gap:7px;
-  font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.05em;
-  padding:7px 13px 7px 10px;border-radius:var(--r-pill);
-  background:rgba(7,7,12,.7);
-  border:1px solid rgba(255,255,255,.14);
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-}
-
-.profile-body{padding:20px 22px 24px}
-.profile-name{
-  font-family:"Space Grotesk",sans-serif;
-  font-size:22px;font-weight:700;letter-spacing:-.02em;
-  display:block;margin-bottom:6px;
-  transition:color .2s ease;
-}
-.profile-name:hover{color:var(--pink)}
-.profile-role{font-size:12.5px;color:var(--ink-2);line-height:1.6;margin-bottom:18px}
-
-.profile-meta{
-  display:flex;flex-direction:column;gap:9px;
-  padding-top:16px;border-top:1px dashed var(--line-2);
-  font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--ink-3);
-}
-.profile-meta div{display:flex;justify-content:space-between;gap:12px}
-.profile-meta span{color:var(--ink-2);text-align:right}
-
-/* ============================================================
-   SECTIONS
-   ============================================================ */
-section{position:relative;z-index:2}
-.section{
-  padding:clamp(56px,7.5vw,96px) 0;
-  border-top:1px solid var(--line);
-  scroll-margin-top:68px;
-}
-
-.section-head{
-  display:flex;align-items:flex-end;justify-content:space-between;
-  gap:24px;flex-wrap:wrap;margin-bottom:44px;
-}
-.section-num{
-  font-family:"JetBrains Mono",monospace;
-  font-size:11px;letter-spacing:.12em;text-transform:uppercase;
-  font-weight:500;
-  background:var(--grad);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  display:block;margin-bottom:10px;
-}
-.section-title{
-  font-family:"Space Grotesk",sans-serif;
-  font-weight:700;
-  font-size:clamp(26px,3.6vw,36px);
-  letter-spacing:-.03em;line-height:1.15;
-}
-.section-sub{
-  font-size:14px;color:var(--ink-2);
-  max-width:44ch;line-height:1.6;
-}
-
-/* ============================================================
-   EXPERIENCE TIMELINE
-   ============================================================ */
-.timeline{display:flex;flex-direction:column}
-
-.job{
-  display:grid;
-  grid-template-columns:150px minmax(0,1fr);
-  gap:32px;
-  padding:34px 0;
-  border-top:1px solid var(--line);
-}
-.job:first-child{border-top:0;padding-top:0}
-.job:last-child{padding-bottom:0}
-
-.job-date{
-  font-family:"JetBrains Mono",monospace;
-  font-size:11px;letter-spacing:.04em;
-  color:var(--cyan);
-  padding-top:3px;
-  white-space:nowrap;
-}
-
-.job-main{
-  position:relative;
-  padding-left:30px;
-  border-left:1px solid var(--line);
-}
-.job-main::before{
-  content:"";
-  position:absolute;left:-4.5px;top:7px;
-  width:9px;height:9px;border-radius:50%;
-  background:var(--grad);
-  box-shadow:0 0 0 4px rgba(124,92,255,.1);
-}
-
-.job-title{
-  font-family:"Space Grotesk",sans-serif;
-  font-size:18.5px;font-weight:700;
-  letter-spacing:-.015em;line-height:1.35;
-  margin-bottom:5px;
-}
-.job-company{
-  font-size:14px;font-weight:500;color:var(--ink);
-  margin-bottom:6px;
-}
-.job-company .sep{color:var(--ink-3);font-weight:400}
-
-.job-meta{
-  font-family:"JetBrains Mono",monospace;
-  font-size:11px;color:var(--ink-3);
-  margin-bottom:18px;
-}
-
-.job-bullets{display:flex;flex-direction:column;gap:9px;margin-bottom:18px}
-.job-bullets li{
-  position:relative;
-  padding-left:19px;
-  font-size:14px;color:var(--ink-2);line-height:1.62;
-}
-.job-bullets li::before{
-  content:"";
-  position:absolute;left:0;top:9px;
-  width:5px;height:5px;border-radius:1.5px;
-  background:var(--grad);
-}
-.job-bullets strong{color:var(--ink);font-weight:600}
-
-.job-links{display:flex;flex-wrap:wrap;gap:8px}
-.job-links a{
-  display:inline-flex;align-items:center;gap:5px;
-  font-size:12px;font-weight:500;
-  padding:6px 13px;border-radius:var(--r-pill);
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.02);
-  color:var(--ink-2);
-  transition:color .2s ease,border-color .2s ease,background .2s ease,transform .25s var(--ease);
-}
-.job-links a:hover{
-  color:var(--ink);
-  border-color:rgba(124,92,255,.55);
-  background:rgba(124,92,255,.1);
-  transform:translateY(-2px);
-}
-
-/* ============================================================
-   PORTFOLIO
-   ============================================================ */
-.portfolio-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:20px;
-}
-
-.project{
-  display:block;
-  border-radius:var(--r-lg);
-  overflow:hidden;
-  background:var(--surface);
-  border:1px solid var(--line);
-  box-shadow:var(--shadow-sm);
-  transition:transform .4s var(--ease),border-color .3s ease,box-shadow .4s ease;
-}
-.project:hover{
-  transform:translateY(-6px);
-  border-color:rgba(124,92,255,.5);
-  box-shadow:0 28px 60px -28px rgba(124,92,255,.55);
-}
-
-.browser-bar{
-  height:42px;display:flex;align-items:center;gap:12px;
-  padding:0 15px;
-  background:rgba(255,255,255,.02);
-  border-bottom:1px solid var(--line);
-}
-.dots{display:flex;gap:6px;flex:none}
-.dots i{width:9px;height:9px;border-radius:50%;display:block}
-.dots i:nth-child(1){background:#FF5F57}
-.dots i:nth-child(2){background:#FEBC2E}
-.dots i:nth-child(3){background:#28C840}
-.url{
-  flex:1;min-width:0;
-  font-family:"JetBrains Mono",monospace;font-size:10.5px;
-  color:var(--ink-3);
-  padding:5px 11px;border-radius:7px;
-  background:rgba(255,255,255,.035);
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-}
-
-.preview{position:relative;aspect-ratio:16/10;overflow:hidden;background:#0A0A10}
-.preview img{
-  width:100%;height:100%;object-fit:cover;object-position:top center;
-  transition:transform .8s var(--ease),filter .4s ease;
-}
-.project:hover .preview img{transform:scale(1.04);filter:saturate(1.05)}
-
-.preview-overlay{
-  position:absolute;inset:0;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
-  background:linear-gradient(180deg,rgba(7,7,12,.1),rgba(7,7,12,.78));
-  opacity:0;transition:opacity .3s ease;
-}
-.project:hover .preview-overlay{opacity:1}
-.preview-visit{
-  padding:10px 18px;border-radius:var(--r-pill);
-  background:#fff;color:#08080D;
-  font-size:13px;font-weight:700;
-  box-shadow:0 12px 28px rgba(0,0,0,.35);
-}
-.preview-hint{
-  font-family:"JetBrains Mono",monospace;font-size:10px;
-  color:rgba(255,255,255,.72);
-}
-
-.project-foot{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:16px;padding:17px 19px 19px;
-}
-.project-name{font-family:"Space Grotesk",sans-serif;font-size:16.5px;font-weight:700;letter-spacing:-.015em}
-.project-type{font-size:11.5px;color:var(--ink-3);margin-top:4px}
-.project-arrow{
-  width:36px;height:36px;border-radius:50%;flex:none;
-  border:1px solid var(--line-2);
-  display:grid;place-items:center;
-  color:var(--ink-2);
-  transition:all .3s var(--ease);
-}
-.project:hover .project-arrow{
-  background:var(--grad);color:#08080D;border-color:transparent;
-  transform:rotate(45deg);
-}
-
-/* ============================================================
-   SKILLS
-   ============================================================ */
-.skills-grid{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:16px;
-}
-.skill-card{
-  padding:24px;
-  border-radius:var(--r-lg);
-  background:var(--surface);
-  border:1px solid var(--line);
-  transition:border-color .3s ease,transform .35s var(--ease),background .3s ease;
-}
-.skill-card:hover{
-  transform:translateY(-4px);
-  border-color:rgba(124,92,255,.45);
-  background:var(--surface-2);
-}
-.skill-label{
-  display:flex;align-items:center;gap:9px;
-  font-family:"JetBrains Mono",monospace;
-  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--ink-3);
-  margin-bottom:16px;
-}
-.skill-label i{
-  width:6px;height:6px;border-radius:2px;
-  background:var(--grad);flex:none;
-}
-.chips{display:flex;flex-wrap:wrap;gap:7px}
-.chip{
-  font-size:12.5px;
-  padding:7px 12px;border-radius:9px;
-  background:rgba(255,255,255,.035);
-  border:1px solid var(--line);
-  color:var(--ink-2);
-  transition:all .22s ease;
-}
-.chip:hover{
-  color:var(--ink);
-  border-color:rgba(124,92,255,.45);
-  background:rgba(124,92,255,.1);
-}
-
-/* ============================================================
-   ABOUT / INFO
-   ============================================================ */
-.info-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr 1.2fr;
-  gap:16px;
-}
-.info-card{
-  padding:26px;
-  border-radius:var(--r-lg);
-  background:var(--surface);
-  border:1px solid var(--line);
-  transition:border-color .3s ease,transform .35s var(--ease);
-}
-.info-card:hover{transform:translateY(-4px);border-color:rgba(124,92,255,.4)}
-
-.info-label{
-  font-family:"JetBrains Mono",monospace;
-  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--ink-3);
-  margin-bottom:14px;
-}
-.info-degree{font-family:"Space Grotesk",sans-serif;font-size:16px;font-weight:700;margin-bottom:5px;letter-spacing:-.01em}
-.info-school{font-size:13px;color:var(--ink-2);line-height:1.6}
-
-.lang-list{display:flex;flex-wrap:wrap;gap:8px}
-.lang{
-  font-size:12.5px;font-weight:600;
-  padding:7px 14px;border-radius:var(--r-pill);
-  color:var(--cyan);
-  background:rgba(61,216,255,.09);
-  border:1px solid rgba(61,216,255,.22);
-}
-
-.contact-list{display:flex;flex-direction:column;gap:14px}
-.contact-list .lbl{
-  display:block;
-  font-family:"JetBrains Mono",monospace;
-  font-size:10px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--ink-3);margin-bottom:3px;
-}
-.contact-list a{font-size:13.5px;color:var(--ink-2);transition:color .2s ease;word-break:break-word}
-.contact-list a:hover{color:var(--pink)}
-
-/* ============================================================
-   FOOTER
-   ============================================================ */
-.footer{
-  border-top:1px solid var(--line);
-  background:var(--bg-2);
-  padding:52px 0 30px;
-  position:relative;z-index:2;
-}
-.footer-top{
-  display:flex;justify-content:space-between;align-items:flex-end;
-  gap:28px;flex-wrap:wrap;margin-bottom:32px;
-}
-.footer-name{font-family:"Space Grotesk",sans-serif;font-size:24px;font-weight:700;letter-spacing:-.02em}
-.footer-tag{
-  font-family:"JetBrains Mono",monospace;
-  font-size:11px;color:var(--ink-3);
-  margin-top:9px;line-height:1.7;max-width:52ch;
-}
-.footer-links{display:flex;flex-wrap:wrap;gap:8px}
-.footer-links a{
-  font-size:12.5px;
-  padding:7px 14px;border-radius:var(--r-pill);
-  border:1px solid var(--line);
-  color:var(--ink-2);
-  transition:all .22s ease;
-}
-.footer-links a:hover{color:var(--ink);border-color:rgba(124,92,255,.5);background:rgba(124,92,255,.09)}
-
-.footer-bottom{
-  display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
-  padding-top:22px;border-top:1px solid var(--line);
-  font-family:"JetBrains Mono",monospace;
-  font-size:11px;color:var(--ink-3);
-}
-
-/* ============================================================
-   REVEAL ANIMATION
-   ============================================================ */
-.reveal{
-  opacity:0;
-  transform:translateY(18px);
-  transition:opacity .75s var(--ease),transform .75s var(--ease);
-}
-.reveal.in{opacity:1;transform:none}
-
-.portfolio-grid .reveal:nth-child(2){transition-delay:.07s}
-.portfolio-grid .reveal:nth-child(3){transition-delay:.14s}
-.portfolio-grid .reveal:nth-child(4){transition-delay:.21s}
-.skills-grid .reveal:nth-child(2){transition-delay:.06s}
-.skills-grid .reveal:nth-child(3){transition-delay:.12s}
-.skills-grid .reveal:nth-child(4){transition-delay:.18s}
-.skills-grid .reveal:nth-child(5){transition-delay:.24s}
-.skills-grid .reveal:nth-child(6){transition-delay:.30s}
-.info-grid .reveal:nth-child(2){transition-delay:.08s}
-.info-grid .reveal:nth-child(3){transition-delay:.16s}
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-@media (max-width:980px){
-  .hero-grid{grid-template-columns:1fr;gap:44px}
-  .profile-card{max-width:400px}
-  .info-grid{grid-template-columns:1fr 1fr}
-  .info-grid .info-card:last-child{grid-column:1 / -1}
-}
-
-@media (max-width:820px){
-  .nav-links{display:none}
-  .portfolio-grid,.skills-grid{grid-template-columns:1fr}
-  .job{grid-template-columns:1fr;gap:12px}
-  .job-main{padding-left:22px}
-  .job-main::before{top:6px}
-}
-
-@media (max-width:620px){
-  .brand-name{display:none}
-  .hero{padding:44px 0 52px}
-  .hero h1{font-size:clamp(32px,10vw,44px)}
-  .lede{font-size:15px}
-  .cta-row .btn{flex:1 1 100%}
-  .facts{gap:16px 22px}
-  .section-head{margin-bottom:32px}
-  .job{padding:28px 0}
-  .job-title{font-size:17px}
-  .job-bullets li{font-size:13.5px}
-  .info-grid{grid-template-columns:1fr}
-  .info-grid .info-card:last-child{grid-column:auto}
-  .footer-top{align-items:flex-start}
-  .footer-name{font-size:21px}
-}
-
-@media (max-width:400px){
-  .availability{font-size:10px;padding:6px 12px 6px 10px}
-  .project-foot{padding:15px}
-}
-
-@media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *,*::before,*::after{
-    animation-duration:.001ms !important;
-    animation-iteration-count:1 !important;
-    transition-duration:.001ms !important;
-  }
-  .reveal{opacity:1;transform:none}
-}
-
-/* ============================================================
-   PRINT
-   ============================================================ */
-@media print{
-  :root{
-    --bg:#fff;--bg-2:#fff;--surface:#fff;--surface-2:#fff;
-    --ink:#111;--ink-2:#333;--ink-3:#666;
-    --line:#ddd;--line-2:#ccc;
-  }
-  body{background:#fff !important;color:#111;font-size:11pt}
-  .grid-overlay,.nav,.cta-row,.preview-overlay,.footer-links{display:none !important}
-  .hero{padding:0 0 20px}
-  .profile-card{box-shadow:none;break-inside:avoid}
-  .profile-card::before{display:none}
-  .job,.skill-card,.info-card,.project{break-inside:avoid;box-shadow:none}
-  .portfolio-grid{grid-template-columns:1fr 1fr}
-  .preview{display:none}
-  .reveal{opacity:1 !important;transform:none !important}
-  a{text-decoration:none}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#08080D">
+  <meta name="color-scheme" content="dark">
+  <title>Brian Gicaro D. | WordPress Developer, HTML/CSS, SEO & GHL Automation</title>
+  <meta name="description" content="Brian Gicaro D. — WordPress Elementor Developer, SEO Specialist, GHL Automation, Graphic Design & SMM. Portfolio, WordPress and Elementor development, custom HTML/CSS, technical SEO, and GoHighLevel automation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#08080D;
+      --bg-soft:#0E0E17;
+      --panel:#12121C;
+      --panel-2:#171722;
+      --line:rgba(255,255,255,.09);
+      --line-soft:rgba(255,255,255,.055);
+      --ink:#F3F3F8;
+      --ink-muted:#9A9AB0;
+      --ink-faint:#65657A;
+      --pink:#FF3D8A;
+      --violet:#7C5CFF;
+      --cyan:#3DD8FF;
+      --green:#48E59A;
+      --grad-signature:linear-gradient(120deg,#FF3D8A 0%,#7C5CFF 55%,#3DD8FF 100%);
+      --grad-soft:linear-gradient(135deg,rgba(255,61,138,.13),rgba(124,92,255,.13));
+      --radius-lg:24px;
+      --radius-md:16px;
+      --radius-sm:10px;
+      --shadow-glow:0 0 0 1px rgba(255,255,255,.06),0 24px 65px -24px rgba(124,92,255,.4);
+      --max:1160px;
+    }
+
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:78px}
+    body{
+      margin:0;
+      background:
+        radial-gradient(1100px 560px at 82% -8%,rgba(124,92,255,.22),transparent 60%),
+        radial-gradient(900px 500px at 8% 8%,rgba(255,61,138,.14),transparent 55%),
+        var(--bg);
+      color:var(--ink);
+      font-family:Inter,system-ui,sans-serif;
+      font-size:16px;
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
+    }
+    body::selection{background:rgba(124,92,255,.35);color:#fff}
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+    ul{margin:0;padding:0;list-style:none}
+    h1,h2,h3,p{margin-top:0}
+    button,input{font:inherit}
+    .display{font-family:"Space Grotesk",sans-serif}
+    .mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 28px;position:relative;z-index:2}
+
+    .grid-overlay{
+      position:fixed;inset:0;z-index:0;pointer-events:none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
+      background-size:64px 64px;
+      -webkit-mask-image:radial-gradient(1200px 700px at 60% 0%,#000 10%,transparent 75%);
+      mask-image:radial-gradient(1200px 700px at 60% 0%,#000 10%,transparent 75%);
+    }
+
+    .skip-link{
+      position:absolute;left:-999px;top:0;background:var(--ink);color:var(--bg);
+      padding:10px 16px;border-radius:0 0 8px 0;z-index:100;
+    }
+    .skip-link:focus{left:0}
+    a:focus-visible{outline:2px solid var(--violet);outline-offset:4px;border-radius:6px}
+
+    /* STATUS BAR */
+    .statusbar{
+      border-bottom:1px solid var(--line);
+      position:sticky;top:0;z-index:50;
+      backdrop-filter:blur(16px) saturate(140%);
+      -webkit-backdrop-filter:blur(16px) saturate(140%);
+      background:rgba(8,8,13,.78);
+    }
+    .statusbar .wrap{
+      min-height:66px;display:flex;align-items:center;justify-content:space-between;gap:18px;
+      padding-top:10px;padding-bottom:10px;
+    }
+    .status-left{display:flex;align-items:center;gap:10px;font-size:12px;min-width:0}
+    .status-dot{
+      width:8px;height:8px;border-radius:50%;background:var(--green);flex:none;
+      box-shadow:0 0 0 4px rgba(72,229,154,.12),0 0 15px rgba(72,229,154,.65);
+      animation:pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+    .status-text b{font-weight:700;color:var(--ink)}
+    .status-loc{color:var(--ink-faint)}
+    .status-right{display:flex;gap:8px;flex:none}
+    .top-link{
+      font-size:12px;padding:8px 13px;border-radius:100px;border:1px solid var(--line);
+      color:var(--ink);white-space:nowrap;transition:.2s ease;
+    }
+    .top-link:hover{border-color:rgba(124,92,255,.65);background:rgba(124,92,255,.1);transform:translateY(-1px)}
+
+    /* HERO */
+    .hero{padding:78px 0 72px;border-top:0}
+    .hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:56px;align-items:center}
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:10px;font-size:11.5px;letter-spacing:.14em;
+      text-transform:uppercase;color:transparent;background:var(--grad-signature);
+      -webkit-background-clip:text;background-clip:text;font-weight:700;margin-bottom:20px;
+      animation:fadeUp .8s cubic-bezier(.16,1,.3,1) both;
+    }
+    .eyebrow::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--grad-signature);flex:none}
+    .hero h1{
+      font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(42px,5.6vw,68px);
+      line-height:1.02;letter-spacing:-.035em;margin:0 0 18px;
+      animation:fadeUp .8s cubic-bezier(.16,1,.3,1) .12s both;
+    }
+    .hero h1 .grad{
+      background:var(--grad-signature);-webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    .role-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+    .role-tag{
+      font-family:"JetBrains Mono",monospace;font-size:11.5px;padding:8px 13px;border-radius:100px;
+      background:var(--panel);border:1px solid var(--line);color:var(--ink-muted);
+      animation:fadeUp .6s cubic-bezier(.16,1,.3,1) both;
+      transition:transform .2s ease,border-color .2s ease,background .2s ease;
+    }
+    .role-tags .role-tag:nth-child(1){animation-delay:.32s}
+    .role-tags .role-tag:nth-child(2){animation-delay:.39s}
+    .role-tags .role-tag:nth-child(3){animation-delay:.46s}
+    .role-tags .role-tag:nth-child(4){animation-delay:.53s}
+    .role-tag:hover{transform:translateY(-2px);border-color:rgba(124,92,255,.55)}
+    .role-tag.on{color:var(--ink);border-color:rgba(124,92,255,.5);background:linear-gradient(180deg,rgba(124,92,255,.14),rgba(255,61,138,.08))}
+    .hero .lede{
+      font-size:16px;color:var(--ink-muted);max-width:67ch;margin-bottom:30px;
+      animation:fadeUp .8s cubic-bezier(.16,1,.3,1) .6s both;
+    }
+    .hero .lede strong{color:var(--ink);font-weight:600}
+    .cta-row{display:flex;flex-wrap:wrap;gap:11px;animation:fadeUp .8s cubic-bezier(.16,1,.3,1) .72s both}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 21px;
+      border-radius:100px;font-size:14px;font-weight:700;transition:.2s ease;position:relative;
+      overflow:hidden;border:1px solid transparent;
+    }
+    .btn-primary{background:var(--grad-signature);color:#08080D;box-shadow:0 9px 28px -10px rgba(255,61,138,.55)}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 15px 36px -12px rgba(124,92,255,.7)}
+    .btn-ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+    .btn-ghost:hover{border-color:rgba(124,92,255,.6);background:rgba(124,92,255,.07);transform:translateY(-2px)}
+
+    /* BADGE */
+    .badge-card{
+      background:linear-gradient(180deg,var(--panel),var(--panel-2));border-radius:var(--radius-lg);
+      box-shadow:var(--shadow-glow);overflow:hidden;position:relative;border:1px solid var(--line);
+      animation:fadeSide .9s cubic-bezier(.16,1,.3,1) .38s both;
+      transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s ease;
+    }
+    .badge-card:hover{transform:translateY(-6px);box-shadow:0 0 0 1px rgba(255,255,255,.08),0 30px 70px -22px rgba(124,92,255,.55)}
+    .badge-card::before{
+      content:"";position:absolute;inset:0;padding:1px;border-radius:var(--radius-lg);
+      background:var(--grad-signature);background-size:220% 220%;
+      -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;mask-composite:exclude;opacity:.55;pointer-events:none;
+      animation:borderShimmer 7s ease-in-out infinite;
+    }
+    @keyframes borderShimmer{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+    .badge-top{height:3px;background:var(--grad-signature)}
+    .badge-photo-wrap{position:relative;aspect-ratio:1/1;overflow:hidden;background:var(--panel-2)}
+    .badge-photo-wrap img{width:100%;height:100%;object-fit:cover;filter:saturate(1.05) contrast(1.02);transition:transform .6s cubic-bezier(.16,1,.3,1)}
+    .badge-card:hover .badge-photo-wrap img{transform:scale(1.05)}
+    .badge-photo-wrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(8,8,13,.78) 100%);pointer-events:none}
+    .badge-status{
+      position:absolute;top:14px;right:14px;z-index:3;background:rgba(8,8,13,.72);
+      border:1px solid rgba(255,255,255,.14);border-radius:100px;padding:7px 13px 7px 9px;
+      display:flex;align-items:center;gap:7px;font-family:"JetBrains Mono",monospace;font-size:10.5px;
+      backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    }
+    .badge-info{padding:22px 22px 24px}
+    .badge-info .name{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:23px;margin-bottom:6px}
+    .badge-info .role{font-size:12.5px;color:var(--ink-muted);margin-bottom:16px;line-height:1.55}
+    .badge-meta{display:flex;flex-direction:column;gap:8px;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--ink-faint);border-top:1px dashed var(--line);padding-top:16px}
+    .badge-meta span{color:var(--ink)}
+
+    /* SECTIONS */
+    section{padding:70px 0;border-top:1px solid var(--line)}
+    .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:40px;flex-wrap:wrap}
+    .section-num{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.06em;background:var(--grad-signature);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:700}
+    .section-title{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(28px,4vw,36px);letter-spacing:-.025em;margin:6px 0 0}
+    .section-sub{color:var(--ink-muted);font-size:14px;max-width:48ch;margin:0}
+
+    /* EXPERIENCE */
+    .timeline{display:flex;flex-direction:column;position:relative}
+    .timeline::before{content:"";position:absolute;left:130px;top:6px;bottom:6px;width:1px;background:linear-gradient(180deg,rgba(124,92,255,.55),rgba(255,61,138,.35),transparent);transform:scaleY(0);transform-origin:top;transition:transform 1.3s cubic-bezier(.16,1,.3,1)}
+    .timeline.line-in::before{transform:scaleY(1)}
+    .job{display:grid;grid-template-columns:130px 1fr;gap:28px;padding:30px 0;border-top:1px solid var(--line);position:relative}
+    .job:first-child{border-top:0;padding-top:0}
+    .job-date{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--cyan);padding-top:4px}
+    .job-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:5px}
+    .job-title{font-size:19px;font-weight:700;font-family:"Space Grotesk",sans-serif}
+    .job-company{font-size:14px;color:var(--ink-muted);margin-bottom:4px}
+    .job-meta{font-size:12px;color:var(--ink-faint);margin-bottom:16px}
+    .job-bullets{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+    .job-bullets li{position:relative;padding-left:20px;font-size:14px;color:var(--ink-muted)}
+    .job-bullets li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:2px;background:var(--grad-signature)}
+    .job-location{font-size:12px;color:var(--ink-faint);margin:14px 0 0}
+    .job-links{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px}
+    .job-links a{color:var(--violet);border-bottom:1px solid transparent}
+    .job-links a:hover{color:var(--pink);border-bottom-color:currentColor}
+
+    /* PORTFOLIO */
+    .portfolio-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .project-card{
+      display:block;background:var(--panel);border:1px solid var(--line);border-radius:18px;
+      overflow:hidden;position:relative;box-shadow:0 15px 40px -28px rgba(0,0,0,.8);
+      transition:transform .3s cubic-bezier(.16,1,.3,1),border-color .3s ease,box-shadow .3s ease;
+    }
+    .project-card:hover{transform:translateY(-6px);border-color:rgba(124,92,255,.55);box-shadow:0 25px 55px -25px rgba(124,92,255,.42)}
+    .browser-chrome{height:42px;display:flex;align-items:center;gap:13px;padding:0 14px;background:#0D0D15;border-bottom:1px solid var(--line)}
+    .chrome-dots{display:flex;gap:6px;flex:none}
+    .chrome-dot{width:9px;height:9px;border-radius:50%;display:block}
+    .dot-red{background:#FF5F57}.dot-yellow{background:#FEBC2E}.dot-green{background:#28C840}
+    .chrome-bar{height:24px;flex:1;display:flex;align-items:center;padding:0 10px;border-radius:6px;background:#171720;color:var(--ink-faint);font:10.5px "JetBrains Mono",monospace;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+    .preview-area{position:relative;aspect-ratio:16/9;overflow:hidden;background:#0A0A10}
+    .preview-img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .65s cubic-bezier(.16,1,.3,1),filter .35s ease}
+    .project-card:hover .preview-img{transform:scale(1.035);filter:saturate(1.04) contrast(1.03)}
+    .preview-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;background:linear-gradient(180deg,rgba(8,8,13,.05),rgba(8,8,13,.68));opacity:0;transition:opacity .25s ease}
+    .project-card:hover .preview-overlay{opacity:1}
+    .preview-visit{padding:10px 16px;border-radius:100px;background:#fff;color:#09090D;font-size:13px;font-weight:800;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+    .preview-hint{font:10.5px "JetBrains Mono",monospace;color:rgba(255,255,255,.75)}
+    .card-footer{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 19px 19px}
+    .card-name{font:700 17px "Space Grotesk",sans-serif}
+    .card-type{font-size:11.5px;color:var(--ink-faint);margin-top:4px}
+    .card-arrow{width:36px;height:36px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;color:var(--ink-muted);flex:none;transition:.25s ease}
+    .project-card:hover .card-arrow{background:var(--grad-signature);color:#08080D;border-color:transparent;transform:rotate(45deg)}
+
+    /* SKILLS */
+    .skill-groups{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .skill-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-md);padding:22px;transition:.25s ease}
+    .skill-card:hover{border-color:rgba(124,92,255,.5);transform:translateY(-3px);background:var(--panel-2)}
+    .skill-group-label{display:flex;align-items:center;gap:9px;font:11px "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint);margin-bottom:14px}
+    .skill-group-label .dot{width:7px;height:7px;border-radius:2px;background:var(--grad-signature)}
+    .chip-row{display:flex;flex-wrap:wrap;gap:8px}
+    .chip{font-size:12.5px;padding:8px 12px;border-radius:8px;background:var(--bg-soft);border:1px solid var(--line-soft);color:var(--ink-muted);transition:.2s ease}
+    .chip:hover{color:var(--ink);border-color:rgba(124,92,255,.4);background:rgba(124,92,255,.08)}
+
+    /* INFO */
+    .info-strip{display:grid;grid-template-columns:1.2fr .8fr 1fr;gap:16px}
+    .info-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-md);padding:24px}
+    .info-card .k{font:11px "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint);margin-bottom:12px}
+    .info-card .degree{font-size:16.5px;font-weight:700;margin-bottom:4px;font-family:"Space Grotesk",sans-serif}
+    .info-card .school{font-size:13px;color:var(--ink-muted)}
+    .lang-list{display:flex;flex-wrap:wrap;gap:8px}
+    .lang-pill{font-size:12px;padding:7px 13px;border-radius:100px;background:rgba(61,216,255,.1);color:var(--cyan);font-weight:600;border:1px solid rgba(61,216,255,.24)}
+    .contact-list{display:flex;flex-direction:column;gap:11px;font-size:13px}
+    .contact-list a:hover{color:var(--pink)}
+    .contact-list .lbl{color:var(--ink-faint);font:10.5px "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:2px}
+
+    /* FOOTER */
+    footer{background:var(--bg-soft);padding:48px 0 30px;margin-top:20px;border-top:1px solid var(--line);position:relative}
+    .foot-top{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:28px}
+    .foot-name{font:700 26px "Space Grotesk",sans-serif}
+    .foot-tag{font:11px "JetBrains Mono",monospace;color:var(--ink-faint);margin-top:8px;letter-spacing:.04em}
+    .foot-links{display:flex;gap:18px;flex-wrap:wrap;font-size:13px}
+    .foot-links a{color:var(--ink-muted)}
+    .foot-links a:hover{color:var(--pink)}
+    .foot-bottom{border-top:1px solid var(--line);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font:11px "JetBrains Mono",monospace;color:var(--ink-faint)}
+
+    /* ANIMATION */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeSide{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:translateX(0)}}
+    .reveal{opacity:0;transform:translateY(18px) scale(.985);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+    .reveal.is-in{opacity:1;transform:none}
+
+    /* RESPONSIVE */
+    @media(max-width:900px){
+      .hero-grid{grid-template-columns:1fr;gap:40px}
+      .badge-card{max-width:380px}
+      .timeline::before{left:112px}
+      .job{grid-template-columns:112px 1fr}
+      .info-strip{grid-template-columns:1fr}
+    }
+    @media(max-width:760px){
+      .portfolio-grid,.skill-groups{grid-template-columns:1fr}
+      .section-head{align-items:flex-start}
+    }
+    @media(max-width:620px){
+      .wrap{padding:0 18px}
+      .statusbar .wrap{min-height:60px}
+      .status-loc{display:none}
+      .status-right .top-link:nth-child(2){display:none}
+      .hero{padding:58px 0 54px}
+      .hero h1{font-size:clamp(38px,12vw,55px)}
+      .hero .lede{text-align:left !important;font-size:15px}
+      section{padding:55px 0}
+      .timeline::before{display:none}
+      .job{grid-template-columns:1fr;gap:8px;padding:27px 0}
+      .job:first-child{padding-top:0}
+      .job-title{font-size:18px}
+      .job-bullets li{font-size:13.5px}
+      .card-footer{padding:16px}
+      .card-name{font-size:16px}
+      .foot-top{align-items:flex-start}
+    }
+    @media(max-width:420px){
+      .status-text{font-size:10.5px}
+      .status-right{display:none}
+      .cta-row .btn{width:100%}
+      .badge-info{padding:19px}
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      *,*::before,*::after{animation:none !important;transition:none !important}
+      .reveal{opacity:1;transform:none}
+    }
+
+
+    /* REDESIGN: crisp graphite + electric-lime creative developer system */
+    :root{
+      --bg:#070a0b; --bg-soft:#0b1011; --panel:#0e1516; --panel-2:#121b1c;
+      --line:rgba(193,255,72,.20); --line-soft:rgba(255,255,255,.075);
+      --ink:#f5f7f3; --ink-muted:#a7b3b1; --ink-faint:#6f807d;
+      --pink:#c1ff48; --violet:#c1ff48; --cyan:#8ef4c5; --green:#c1ff48;
+      --grad-signature:linear-gradient(115deg,#d7ff6b 0%,#b8ff42 55%,#8ef4c5 100%);
+      --grad-soft:linear-gradient(135deg,rgba(193,255,72,.11),rgba(142,244,197,.045));
+      --radius-lg:20px; --radius-md:14px; --radius-sm:9px;
+      --shadow-glow:0 0 0 1px rgba(193,255,72,.10),0 28px 75px -32px rgba(160,255,60,.24);
+    }
+    body{
+      background:radial-gradient(850px 500px at 88% 2%,rgba(177,255,62,.10),transparent 62%),
+                 radial-gradient(700px 420px at 5% 26%,rgba(142,244,197,.055),transparent 64%),var(--bg);
+      letter-spacing:-.012em;
+    }
+    .grid-overlay{opacity:.14;mask-image:linear-gradient(to bottom,black,transparent 75%)}
+    .statusbar{background:rgba(7,10,11,.84);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+    .status-dot{background:#c1ff48;box-shadow:0 0 14px rgba(193,255,72,.7)}
+    .top-link{border-radius:999px;border-color:var(--line-soft);transition:all .22s ease}
+    .top-link:hover{border-color:rgba(193,255,72,.6);background:rgba(193,255,72,.08);transform:translateY(-2px)}
+    .hero{padding:clamp(58px,8vw,108px) 0 clamp(60px,7vw,90px)}
+    .hero-grid{grid-template-columns:minmax(0,1.12fr) minmax(300px,.88fr);gap:clamp(32px,6vw,88px)}
+    .eyebrow{color:#c1ff48;letter-spacing:.14em;text-transform:uppercase;font-size:11px;font-weight:700}
+    .eyebrow::before{border-radius:50%;background:#c1ff48;box-shadow:0 0 13px rgba(193,255,72,.65)}
+    .hero h1{font-size:clamp(42px,5.8vw,76px);line-height:1.035;letter-spacing:-.065em;max-width:800px}
+    .hero h1 .grad{background:var(--grad-signature);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .role-tag{border-radius:999px;border-color:var(--line-soft);background:rgba(255,255,255,.025);font-size:11px}
+    .role-tag.on{border-color:rgba(193,255,72,.27);background:rgba(193,255,72,.065)}
+    .role-tag:hover{border-color:rgba(193,255,72,.7)}
+    .hero .lede{font-size:clamp(15px,1.3vw,17px);line-height:1.85;color:#b5c0bd;max-width:650px}
+    .hero .lede strong{color:#f7faf4}
+    .btn{border-radius:999px;padding:14px 22px;font-weight:700;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+    .btn-primary{background:var(--grad-signature);color:#10150a;box-shadow:0 10px 28px -12px rgba(193,255,72,.6)}
+    .btn-primary:hover{transform:translateY(-3px);box-shadow:0 16px 34px -12px rgba(193,255,72,.45)}
+    .btn-ghost:hover{border-color:rgba(193,255,72,.65);background:rgba(193,255,72,.06);transform:translateY(-3px)}
+    .badge-card{border:1px solid rgba(193,255,72,.24);border-radius:22px;background:linear-gradient(145deg,rgba(20,30,28,.95),rgba(8,12,13,.96));box-shadow:var(--shadow-glow);overflow:hidden}
+    .badge-card::before{background:linear-gradient(120deg,rgba(193,255,72,.12),transparent 60%)}
+    .badge-top{height:3px;background:var(--grad-signature)}
+    section{border-top-color:var(--line-soft)}
+    .section-num,.section-label,.skill-group-label,.mono.eyebrow{color:#c1ff48}
+    .section-title{letter-spacing:-.055em}
+    .portfolio-grid{gap:18px}
+    .project-card,.portfolio-card,.skill-card,.job{border-color:var(--line-soft);transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+    .project-card:hover,.portfolio-card:hover,.skill-card:hover{transform:translateY(-5px);border-color:rgba(193,255,72,.42);box-shadow:0 18px 45px -30px rgba(193,255,72,.25)}
+    .chip{border-radius:999px;border-color:var(--line-soft);background:rgba(255,255,255,.025)}
+    a:focus-visible,button:focus-visible{outline:2px solid #c1ff48;outline-offset:4px}
+    @media(max-width:850px){.hero-grid{grid-template-columns:1fr;gap:36px}.hero h1{font-size:clamp(42px,9vw,66px)}.badge-card{max-width:600px}}
+    @media(max-width:560px){.wrap{padding-left:20px;padding-right:20px}.hero{padding-top:56px}.hero h1{font-size:clamp(38px,11vw,54px)}.cta-row{gap:9px}.btn{padding:12px 17px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+  </style>
 </head>
 
 <body>
-<div class="grid-overlay" aria-hidden="true"></div>
-<a class="skip" href="#main">Skip to content</a>
+  <div class="grid-overlay" aria-hidden="true"></div>
+  <a href="#main" class="skip-link">Skip to content</a>
 
-<!-- ================= NAV ================= -->
-<header class="nav">
-  <div class="wrap nav-inner">
-    <a class="brand" href="#top" aria-label="Brian Gicaro — back to top">
-      <span class="brand-mark" aria-hidden="true">BG</span>
-      <span class="brand-name">Brian Gicaro<span>.</span></span>
-    </a>
-
-    <nav class="nav-links" aria-label="Section navigation">
-      <a href="#experience">Experience</a>
-      <a href="#work">Work</a>
-      <a href="#skills">Skills</a>
-      <a href="#about">About</a>
-    </nav>
-
-    <a class="nav-cta" href="mailto:gicarobrian2011maybhrai@gmail.com">
-      Hire me
-      <span aria-hidden="true">↗</span>
-    </a>
-  </div>
-</header>
-
-<main id="main">
-
-  <!-- ================= HERO ================= -->
-  <section class="hero" id="top">
-    <div class="wrap hero-grid">
-
-      <div class="hero-copy">
-        <span class="availability">
-          <span class="status-dot" aria-hidden="true"></span>
-          Available · Full-time / Part-time
-        </span>
-
-        <h1>
-          I'm Brian Gicaro.<br>
-          I build WordPress sites that
-          <span class="grad">load fast, rank high &amp; convert.</span>
-        </h1>
-
-        <div class="role-tags">
-          <span class="role-tag">WordPress Elementor Developer</span>
-          <span class="role-tag">SEO Specialist</span>
-          <span class="role-tag">GHL Automation</span>
-          <span class="role-tag">Graphic Design &amp; SMM</span>
-        </div>
-
-        <p class="lede">
-          <strong>WordPress + Elementor is where I live, but I'm equally fluent in Divi and Beaver Builder</strong> —
-          building fast, SEO-optimized sites that rank and convert. I handle everything from Core Web Vitals to
-          Rank Math / Yoast SEO, schema markup, PageSpeed Insights, GA4 and Meta Pixel tracking setup.
-          <strong>Beyond WordPress, I bring Figma-to-site builds, GoHighLevel automation and graphic design</strong>
-          to create efficient, scalable digital experiences built to perform.
-        </p>
-
-        <div class="cta-row">
-          <a class="btn btn-primary" href="mailto:gicarobrian2011maybhrai@gmail.com">
-            Email me <span aria-hidden="true">↗</span>
-          </a>
-          <a class="btn btn-ghost" href="https://briangicaro2026-wpworksites-portfolio.netlify.app/" target="_blank" rel="noopener noreferrer">
-            View live portfolio <span aria-hidden="true">↗</span>
-          </a>
-        </div>
-
-        <dl class="facts">
-          <div class="fact">
-            <dt>Based in</dt>
-            <dd>Calapan City, PH</dd>
-          </div>
-          <div class="fact">
-            <dt>Timezone</dt>
-            <dd>GMT+8 · PHT</dd>
-          </div>
-          <div class="fact">
-            <dt>Clients</dt>
-            <dd>US · UK · PH</dd>
-          </div>
-        </dl>
+  <div class="statusbar">
+    <div class="wrap">
+      <div class="status-left">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span class="status-text mono"><b>Available for Freelance Work · PART-TIME / FULL-TIME</b></span>
+        <span class="status-loc mono">· Calapan City, Oriental Mindoro PH · GMT+8 PHT</span>
       </div>
+      <div class="status-right">
+        <a class="top-link" href="https://wa.me/639692133420?text=Hi%20Brian%2C%20I'm%20reaching%20out%20regarding%20your%20portfolio." target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        <a class="top-link" href="tel:+639692133420">Call</a>
+      </div>
+    </div>
+  </div>
 
-      <aside class="profile-card">
-        <div class="profile-photo">
-          <a href="https://v2.onlinejobs.ph/jobseekers/info/2447620" target="_blank" rel="noopener noreferrer" aria-label="View Brian Gicaro's OnlineJobs.ph profile">
-            <img
-              src="https://media.onlinejobs.ph/jobseekers_pictures/2447620/3YvTQ2Lytyh5zuj7DCIWCzzapqNcoYcpY6T2LRKm_250x250.png"
-              alt="Portrait of Brian Gicaro D."
-              width="640" height="640"
-              loading="eager" fetchpriority="high">
-          </a>
-          <span class="photo-badge">
-            <span class="status-dot" aria-hidden="true"></span>
-            Open to work
-          </span>
-        </div>
+  <main id="main">
 
-        <div class="profile-body">
-          <a class="profile-name" href="https://v2.onlinejobs.ph/jobseekers/info/2447620" target="_blank" rel="noopener noreferrer">
-            Brian Gicaro D.
-          </a>
-          <p class="profile-role">
-            WordPress Expert (Elementor / Divi / Beaver) · GHL Automation · SEO · Graphics · SMM
+    <!-- HERO -->
+    <section class="hero" style="border-top:none;">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow mono">Portfolio &amp; Resume · 2026</span>
+
+          <h1>
+            I'm Brian Gicaro.<br>
+            <span class="grad">I build high-speed WordPress sites that turn traffic into revenue.</span>
+          </h1>
+
+          <div class="role-tags">
+            <span class="role-tag on">WordPress Elementor Developer</span>
+            <span class="role-tag on">SEO Specialist</span>
+            <span class="role-tag on">GHL Automation</span>
+            <span class="role-tag on">Graphic Design &amp; SMM</span>
+          </div>
+
+          <p class="lede">
+            <strong>WordPress + Elementor is where I live, but I am equally fluent in Divi and Beaver Builder</strong> —
+            building fast, SEO-optimized sites that rank and convert. I handle everything from Core Web Vitals to
+            Rank Math/Yoast SEO, schema markup, PageSpeed Insights, GA4 and Meta Pixel tracking setup.
+            <strong>Beyond WordPress, I bring Figma-to-site builds, GoHighLevel automation and graphic design</strong>
+            to create efficient, scalable digital experiences built to perform.
           </p>
 
-          <div class="profile-meta">
-            <div>Location <span>Oriental Mindoro, PH</span></div>
-            <div>Timezone <span>GMT+8</span></div>
-            <div>Experience <span>Corporate + Freelance</span></div>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="mailto:gicarobrian2011maybhrai@gmail.com">Email Me ↗</a>
+            <a class="btn btn-ghost" href="https://briangicaro2026-wpworksites-portfolio.netlify.app/" target="_blank" rel="noopener noreferrer">Visit Portfolio ↗</a>
           </div>
         </div>
-      </aside>
 
-    </div>
-  </section>
+        <div class="badge-card">
+          <div class="badge-top" aria-hidden="true"></div>
 
-  <!-- ================= EXPERIENCE ================= -->
-  <section class="section" id="experience">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div>
-          <span class="section-num">01 — Work History</span>
-          <h2 class="section-title">Corporate &amp; Freelance Background</h2>
+          <div class="badge-photo-wrap">
+            <a href="https://v2.onlinejobs.ph/jobseekers/info/2447620" target="_blank" rel="noopener noreferrer" aria-label="View Brian Gicaro's OnlineJobs.ph profile">
+              <img
+                src="https://media.onlinejobs.ph/jobseekers_pictures/2447620/3YvTQ2Lytyh5zuj7DCIWCzzapqNcoYcpY6T2LRKm_250x250.png"
+                alt="Portrait of Brian Gicaro D."
+                width="640"
+                height="640"
+                loading="eager"
+                fetchpriority="high"
+              >
+            </a>
+            <span class="badge-status"><span class="status-dot" aria-hidden="true"></span>Open to work</span>
+          </div>
+
+          <div class="badge-info">
+            <a href="https://v2.onlinejobs.ph/jobseekers/info/2447620" target="_blank" rel="noopener noreferrer" class="name display">Brian Gicaro D.</a>
+            <div class="role">WordPress Expert (Elementor / Divi / Beaver) · GHL Automation · SEO · Graphics · SMM</div>
+            <div class="badge-meta">
+              <div>Based in <span>Calapan City, Oriental Mindoro, Philippines</span></div>
+              <div>Timezone <span>GMT+8</span></div>
+              <div>Clients <span>US · UK · PH</span></div>
+            </div>
+          </div>
         </div>
-        <p class="section-sub">
-          Website development, infrastructure, SEO, content, design and digital operations across corporate and freelance environments.
-        </p>
       </div>
+    </section>
 
-      <div class="timeline">
-
-        <!-- JOB 1 -->
-        <article class="job reveal">
-          <div class="job-date">FEB 2025 — PRESENT</div>
-          <div class="job-main">
-            <h3 class="job-title">(VA) WordPress Website Developer / Designer · Website Manager</h3>
-            <p class="job-company">Near Me Notary LLC d/b/a Total Closing Solutions <span class="sep">·</span> Remote Online Notary</p>
-            <p class="job-meta">Part-time · Remote · Flexible Schedule · St. Petersburg, Florida, USA</p>
-
-            <ul class="job-bullets">
-              <li>Maintained website content, product photography and Google Business Profile listings across multiple branches, with targeted local SEO optimization.</li>
-              <li>Built the contact page in Elementor with a GoHighLevel lead-form embed and structured NAP blocks for local SEO consistency.</li>
-              <li>Implemented Google Maps, FAQ content and structured page elements to improve usability, engagement and search visibility.</li>
-              <li>Redesigned Elementor layouts and styling for stronger visual consistency, readability and mobile responsiveness.</li>
-              <li>Converted site imagery to AVIF and implemented Core Web Vitals improvements based on PageSpeed Insights recommendations.</li>
-              <li>Performed on-page SEO improvements including metadata, heading structure and keyword placement.</li>
-              <li>Handled WordPress updates, maintenance and cPanel backups to support site security and uptime.</li>
-              <li>Applied a consistent brand system including pill-shaped CTAs, typography and layered shadows across key pages.</li>
-            </ul>
-
-            <div class="job-links">
-              <a href="https://totalclosingsolutions.com/" target="_blank" rel="noopener noreferrer">totalclosingsolutions.com ↗</a>
-              <a href="https://www.facebook.com/profile.php?id=61568094374706" target="_blank" rel="noopener noreferrer">Facebook Page ↗</a>
-            </div>
+    <!-- EXPERIENCE -->
+    <section id="work" class="reveal">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="section-num mono">01 / Work History</div>
+            <h2 class="section-title">Corporate &amp; Freelancing Background</h2>
           </div>
-        </article>
-
-        <!-- JOB 2 -->
-        <article class="job reveal">
-          <div class="job-date">MAY 2026 — JUNE 2026</div>
-          <div class="job-main">
-            <h3 class="job-title">(VA) WordPress Developer · Website Builder</h3>
-            <p class="job-company">WebTree Creative LLC <span class="sep">·</span> US Agency</p>
-            <p class="job-meta">Part-time · Remote · WordPress Technical, GHL Support &amp; Web Development · Missoula, MT, USA</p>
-
-            <ul class="job-bullets">
-              <li>Successfully completed a complex, multi-site migration project from SiteGround to WPEngine, handling challenging manual HTML/PHP site migrations and troubleshooting plugin failures for various domains (heartheircries.org, montanacanvastarps.com, lisaraschellemontana.com).</li>
-              <li>Formally accepted the task for and assumed management of greenlakefestival.org and unitytreeandforestry.com, providing ongoing website updates, technical support, and content management.</li>
-              <li>Performs all critical WordPress maintenance tasks, including core updates, theme and plugin updates, security monitoring, and regular backups.</li>
-              <li>Optimizes website performance and page load speeds across desktop and mobile devices.</li>
-              <li>Handles technical issue resolution, such as theme conflicts and plugin errors, ensuring continuous website uptime.</li>
-              <li>Configured a WooCommerce to GoHighLevel (GHL) integration to automatically feed new customer data into contact lists and apply specific marketing tags.</li>
-              <li>Established an automated abandoned cart workflow within GoHighLevel for client accounts.</li>
-              <li>Implemented a multi-stage abandoned cart email sequence, scheduling targeted follow-ups at 1-hour, 24-hour, and 72-hour intervals.</li>
-              <li>Developed a post-purchase follow-up automation in GHL to trigger check-in and review request emails 3 days and 30 days after order shipment.</li>
-            </ul>
-
-            <div class="job-links">
-              <a href="https://webtreecreative.com/" target="_blank" rel="noopener noreferrer">webtreecreative.com ↗</a>
-              <a href="https://www.facebook.com/webtreedevelopment/" target="_blank" rel="noopener noreferrer">Facebook Page ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- JOB 3 -->
-        <article class="job reveal">
-          <div class="job-date">DEC 2025 — APR 2026</div>
-          <div class="job-main">
-            <h3 class="job-title">(VA) WordPress Web Developer · Website Development &amp; Maintenance</h3>
-            <p class="job-company">MediaZeus <span class="sep">·</span> Digital Marketing &amp; Web Development Agency</p>
-            <p class="job-meta">Remote · WordPress Development · Website Management · Rock Hill, SC 29732</p>
-
-            <ul class="job-bullets">
-              <li>Built and developed the MediaZeus WordPress website, transforming project requirements and design concepts into a professional, functional and responsive website.</li>
-              <li>Developed and customized WordPress pages, layouts and website sections while maintaining consistent branding, typography, spacing and visual hierarchy.</li>
-              <li>Managed ongoing website maintenance, content updates, layout adjustments and front-end improvements to keep the website current and functional.</li>
-              <li>Optimized website layouts and components for responsive performance across desktop, tablet and mobile devices.</li>
-              <li>Improved the overall UI/UX through refined page structure, navigation, spacing, typography, visual elements and call-to-action sections.</li>
-              <li>Performed website testing, troubleshooting and front-end adjustments to identify and resolve issues affecting usability and presentation.</li>
-              <li>Implemented ongoing website enhancements based on agency requirements, ensuring the site remained aligned with MediaZeus' digital presence and business objectives.</li>
-              <li>Provided continuous WordPress development and website support, maintaining the site's functionality, appearance and overall quality.</li>
-            </ul>
-
-            <div class="job-links">
-              <a href="https://www.mediazeus.com/" target="_blank" rel="noopener noreferrer">mediazeus.com ↗</a>
-              <a href="https://www.facebook.com/themediazeus" target="_blank" rel="noopener noreferrer">Facebook Page ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- JOB 4 -->
-        <article class="job reveal">
-          <div class="job-date">MAR 2023 — JAN 2024</div>
-          <div class="job-main">
-            <h3 class="job-title">(Corporate) Digital Content Officer · Website / SEO / GBP / Social Media</h3>
-            <p class="job-company">Comglasco Aguila Glass Corporation</p>
-            <p class="job-meta">Full-time · Onsite · Monday–Saturday · Parañaque, Philippines</p>
-
-            <ul class="job-bullets">
-              <li>Maintained website content, product photography, and Google Business Profile listings across multiple branches, with targeted keyword optimization.</li>
-              <li>Managed social media content and publishing across Facebook, Instagram, and TikTok, including content scheduling, posting, captions, hashtags, and platform-specific optimization.</li>
-              <li>Developed and published engaging platform-specific content for the Automotive, Advertising, and Architectural industries to increase brand awareness, reach, and engagement.</li>
-              <li>Planned and organized social media content calendars and coordinated promotional posts with marketing campaigns, product launches, and sales activities.</li>
-              <li>Monitored social media channels, engaged with customers, responded to comments and inquiries, and supported customer satisfaction and lead generation.</li>
-              <li>Produced internal and external marketing collateral, promotional graphics, and sales materials for digital and offline campaigns.</li>
-              <li>Scripted, filmed, edited, and published promotional product videos showcasing product features and applications to increase social media engagement.</li>
-              <li>Collaborated with the sales team to provide marketing assets, promotional tools, and social media content supporting business objectives.</li>
-            </ul>
-
-            <div class="job-links">
-              <a href="https://www.comglasco.com/" target="_blank" rel="noopener noreferrer">comglasco.com ↗</a>
-              <a href="https://www.facebook.com/comglascoaguilaglass" target="_blank" rel="noopener noreferrer">Facebook Page ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- JOB 5 -->
-        <article class="job reveal">
-          <div class="job-date">JAN 2023 — OCT 2023</div>
-          <div class="job-main">
-            <h3 class="job-title">(VA) WordPress Website Developer / Designer</h3>
-            <p class="job-company">Metropolitan Medical Center</p>
-            <p class="job-meta">Part-time Contract · Remote · Flexible Schedule · Manila, Philippines</p>
-
-            <ul class="job-bullets">
-              <li>Developed, maintained, and updated the hospital website using <strong>WordPress and Elementor</strong>, including page creation, layout improvements, content updates, service pages, imagery, and doctor profiles.</li>
-              <li>Managed site-wide website content, graphics, images, and digital assets while maintaining consistent branding, accurate medical information, and a user-friendly experience.</li>
-              <li>Implemented and optimized <strong>on-page SEO</strong> elements, including page titles, meta descriptions, headings, image alt text, internal linking, keyword placement, and other search optimization requirements.</li>
-              <li>Conducted website testing, debugging, and troubleshooting across <strong>desktop, tablet, and mobile devices</strong> to ensure responsive layouts, accessibility, functionality, and cross-browser compatibility.</li>
-              <li>Monitored and optimized <strong>website performance and Core Web Vitals</strong>, addressing page-speed issues involving images, caching, render-blocking resources, scripts, and other performance factors.</li>
-              <li>Managed WordPress plugins, themes, updates, and integrations while checking for compatibility issues, plugin conflicts, and potential website functionality problems.</li>
-              <li>Managed website data infrastructure, including <strong>database maintenance, performance optimization, backups, restoration procedures, and website health checks</strong> to support data integrity and uptime.</li>
-              <li>Assisted with website hosting and technical administration, including basic hosting configuration, SSL troubleshooting, domain connectivity, deployment, and website maintenance.</li>
-              <li>Diagnosed and resolved WordPress, Elementor, plugin, layout, content, and functionality issues while minimizing website downtime and maintaining site stability.</li>
-              <li>Created and optimized website banners, graphics, images, and other digital assets to improve visual presentation, usability, and page performance.</li>
-              <li>Coordinated website content updates and digital requirements with hospital staff and departments to ensure timely publication of accurate and relevant information.</li>
-              <li>Provided ongoing website management and technical support, identifying opportunities to improve <strong>SEO, performance, accessibility, security, usability, and overall website experience</strong>.</li>
-            </ul>
-
-            <div class="job-links">
-              <a href="https://metropolitanmedicalcenter.com.ph/" target="_blank" rel="noopener noreferrer">metropolitanmedicalcenter.com.ph ↗</a>
-              <a href="https://www.facebook.com/MetroMedPH/" target="_blank" rel="noopener noreferrer">Facebook Page ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- JOB 6 -->
-        <article class="job reveal">
-          <div class="job-date">JUL 2022 — MAR 2023</div>
-          <div class="job-main">
-            <h3 class="job-title">(Corporate) IT Technical Support Specialist</h3>
-            <p class="job-company">GLP Theorem Ventures Corporation</p>
-            <p class="job-meta">Full-time · Onsite · Tuesday–Saturday · Sorsogon City, Philippines</p>
-
-            <ul class="job-bullets">
-              <li>Provided day-to-day <strong>IT technical support and troubleshooting</strong> for hardware, software, workstations, peripherals, and other technology-related issues across the organization.</li>
-              <li>Installed, configured, updated, and maintained <strong>desktop computers, laptops, workstations, and IT peripherals</strong> to ensure reliable day-to-day operations.</li>
-              <li>Performed hardware diagnostics, software troubleshooting, system updates, physical maintenance, and routine workstation health checks to minimize downtime.</li>
-              <li>Supported <strong>server environments and network infrastructure</strong>, including internet connectivity testing, network troubleshooting, structured cable management, and basic network issue resolution.</li>
-              <li>Managed <strong>user accounts, access credentials, and workstation configurations</strong>, resolving employee technical concerns through the ITarian service desk.</li>
-              <li>Logged, monitored, prioritized, and resolved technical support tickets while providing timely assistance and escalating complex issues when required.</li>
-              <li>Configured and maintained <strong>antivirus, endpoint protection, and firewall settings</strong> while supporting company IT security and safe computing practices.</li>
-              <li>Performed routine system and network checks to identify connectivity, performance, hardware, and software issues before they impacted business operations.</li>
-              <li>Assisted with the deployment, setup, configuration, replacement, and maintenance of IT equipment for employees and operational teams.</li>
-              <li>Supported <strong>IT security awareness practices</strong>, including software updates, account security, responsible system usage, and basic protection of company devices and data.</li>
-              <li>Designed <strong>graphic assets, presentations, promotional materials, and internal communication designs</strong> to support company departments and team requirements.</li>
-              <li>Created and edited <strong>promotional and internal videos</strong> for company communications, training, and marketing-related requirements.</li>
-              <li>Collaborated with internal teams to identify recurring technical issues, improve troubleshooting processes, and maintain reliable workplace technology.</li>
-              <li>Provided technical support for <strong>24/7 business operations</strong>, working across regular day and graveyard shift schedules to maintain continuous IT support and operational readiness.</li>
-            </ul>
-
-            <div class="job-links">
-              <a href="https://theoremcorp.com" target="_blank" rel="noopener noreferrer">theoremcorp.com ↗</a>
-              <a href="https://www.facebook.com/glptheoremventurescorporation/" target="_blank" rel="noopener noreferrer">Facebook Page ↗</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- JOB 7 -->
-        <article class="job reveal">
-          <div class="job-date">JUL 2017 — APR 2022</div>
-          <div class="job-main">
-            <h3 class="job-title">(Corporate) Graphic Designer &amp; WordPress Website Developer / Designer</h3>
-            <p class="job-company">Dr. Jesus C. Delgado Memorial Hospital</p>
-            <p class="job-meta">Full-time · Onsite · Monday–Friday · Quezon City, Philippines</p>
-
-            <ul class="job-bullets">
-              <li>Designed internal and external medical marketing collateral, including promotional graphics, hospital announcements, event materials, patient communication materials, and healthcare campaign assets.</li>
-              <li>Created, developed, and maintained the hospital's WordPress website, including page creation, content updates, graphics, images, and ongoing website management.</li>
-              <li>Managed website hosting and domain-related tasks, including website deployment, basic hosting configuration, backups, maintenance, and troubleshooting.</li>
-              <li>Managed Facebook content and social media posting, including creating graphics, writing captions, scheduling and publishing posts, and maintaining consistent hospital branding.</li>
-              <li>Developed social media content promoting hospital services, medical programs, events, announcements, and healthcare campaigns to increase awareness and engagement.</li>
-              <li>Scripted, filmed, edited, and produced event, promotional, and healthcare-related videos for website and social media publishing.</li>
-              <li>Conducted competitive benchmarking of hospital rates and supported online consultation platforms to improve digital service visibility.</li>
-              <li>Developed branding and corporate assets including staff uniforms, ID cards, patient satisfaction surveys, forms, and other hospital materials.</li>
-              <li>Managed patient inquiries through Facebook and supported online communication to improve engagement and customer service.</li>
-              <li>Collaborated with hospital departments and management to fulfill internal and external design requirements for marketing, communications, events, and medical campaigns.</li>
-            </ul>
-
-            <div class="job-links">
-              <a href="https://jdmh.ph/" target="_blank" rel="noopener noreferrer">jdmh.ph ↗</a>
-              <a href="https://www.facebook.com/jdmhph/" target="_blank" rel="noopener noreferrer">Facebook Page ↗</a>
-            </div>
-          </div>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= PORTFOLIO ================= -->
-  <section class="section" id="work">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div>
-          <span class="section-num">02 — Selected Work</span>
-          <h2 class="section-title">Websites I've Built &amp; Managed</h2>
+          <p class="section-sub">Website development, infrastructure, SEO, content, design and digital operations across corporate and freelance environments.</p>
         </div>
-        <p class="section-sub">Live project previews. Click any project to open the website in a new tab.</p>
-      </div>
 
-      <div class="portfolio-grid">
+        <div class="timeline">
 
-        <!-- TOTAL CLOSING SOLUTIONS -->
-        <a class="project reveal" href="https://totalclosingsolutions.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Total Closing Solutions website">
-          <div class="browser-bar">
-            <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
-            <div class="url">totalclosingsolutions.com</div>
-          </div>
-          <div class="preview">
-            <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Ftotalclosingsolutions.com%2F?w=1200&v=20260815"
-                 alt="Live preview of Total Closing Solutions website"
-                 loading="lazy" decoding="async" width="1200" height="675">
-            <div class="preview-overlay" aria-hidden="true">
-              <span class="preview-visit">Visit Site ↗</span>
-              <span class="preview-hint">totalclosingsolutions.com</span>
-            </div>
-          </div>
-          <div class="project-foot">
+          <article class="job reveal">
+            <div class="job-date mono">FEB 2025 — PRESENT</div>
             <div>
-              <div class="project-name">Total Closing Solutions</div>
-              <div class="project-type">WordPress · Elementor Pro · Remote Online Notary</div>
+              <div class="job-head"><div class="job-title">(VA) WordPress Website Developer / Designer · Website Manager</div></div>
+              <div class="job-company">Near Me Notary LLC d/b/a Total Closing Solutions · Remote Online Notary</div>
+              <div class="job-meta">Part-time · Remote · Flexible Schedule · Florida, USA</div>
+              <ul class="job-bullets">
+                <li>Maintained website content, product photography and Google Business Profile listings across multiple branches, with targeted local SEO optimization.</li>
+                <li>Built the contact page in Elementor with a GoHighLevel lead-form embed and structured NAP blocks for local SEO consistency.</li>
+                <li>Implemented Google Maps, FAQ content and structured page elements to improve usability, engagement and search visibility.</li>
+                <li>Redesigned Elementor layouts and styling for stronger visual consistency, readability and mobile responsiveness.</li>
+                <li>Converted site imagery to AVIF and implemented Core Web Vitals improvements based on PageSpeed Insights recommendations.</li>
+                <li>Performed on-page SEO improvements including metadata, heading structure and keyword placement.</li>
+                <li>Handled WordPress updates, maintenance and cPanel backups to support site security and uptime.</li>
+                <li>Applied a consistent brand system including pill-shaped CTAs, typography and layered shadows across key pages.</li>
+              </ul>
+              <div class="job-links">
+                <a href="https://totalclosingsolutions.com/" target="_blank" rel="noopener noreferrer">Website: totalclosingsolutions.com ↗</a>
+                <a href="https://www.facebook.com/profile.php?id=61568094374706" target="_blank" rel="noopener noreferrer">Facebook Page: Total Closing Solutions ↗</a>
+              </div>
+              <p class="job-location">Location: St. Petersburg, Florida, USA</p>
             </div>
-            <span class="project-arrow" aria-hidden="true">↗</span>
-          </div>
-        </a>
+          </article>
 
-        <!-- COMGLASCO -->
-        <a class="project reveal" href="https://www.comglasco.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit COMGLASCO Aguila Glass website">
-          <div class="browser-bar">
-            <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
-            <div class="url">comglasco.com</div>
-          </div>
-          <div class="preview">
-            <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fwww.comglasco.com%2F?w=1200&v=20260815"
-                 alt="Live preview of COMGLASCO Aguila Glass website"
-                 loading="lazy" decoding="async" width="1200" height="675">
-            <div class="preview-overlay" aria-hidden="true">
-              <span class="preview-visit">Visit Site ↗</span>
-              <span class="preview-hint">comglasco.com</span>
-            </div>
-          </div>
-          <div class="project-foot">
-            <div>
-              <div class="project-name">COMGLASCO Aguila Glass</div>
-              <div class="project-type">WordPress · Website Management · SEO · Digital Content</div>
-            </div>
-            <span class="project-arrow" aria-hidden="true">↗</span>
-          </div>
-        </a>
-
-        <!-- METROPOLITAN MEDICAL CENTER -->
-        <a class="project reveal" href="https://metropolitanmedicalcenter.com.ph/" target="_blank" rel="noopener noreferrer" aria-label="Visit Metropolitan Medical Center website">
-          <div class="browser-bar">
-            <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
-            <div class="url">metropolitanmedicalcenter.com.ph</div>
-          </div>
-          <div class="preview">
-            <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fmetropolitanmedicalcenter.com.ph%2F?w=1200&v=20260815"
-                 alt="Live preview of Metropolitan Medical Center website"
-                 loading="lazy" decoding="async" width="1200" height="675">
-            <div class="preview-overlay" aria-hidden="true">
-              <span class="preview-visit">Visit Site ↗</span>
-              <span class="preview-hint">metropolitanmedicalcenter.com.ph</span>
-            </div>
-          </div>
-          <div class="project-foot">
-            <div>
-              <div class="project-name">Metropolitan Medical Center</div>
-              <div class="project-type">WordPress · Elementor · Website Management · SEO</div>
-            </div>
-            <span class="project-arrow" aria-hidden="true">↗</span>
-          </div>
-        </a>
-
-        <!-- JDMH -->
-        <a class="project reveal" href="https://jdmh.ph/" target="_blank" rel="noopener noreferrer" aria-label="Visit Dr. Jesus C. Delgado Memorial Hospital website">
-          <div class="browser-bar">
-            <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
-            <div class="url">jdmh.ph</div>
-          </div>
-          <div class="preview">
-            <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fjdmh.ph%2F?w=1200&v=20260815"
-                 alt="Live preview of Dr. Jesus C. Delgado Memorial Hospital website"
-                 loading="lazy" decoding="async" width="1200" height="675">
-            <div class="preview-overlay" aria-hidden="true">
-              <span class="preview-visit">Visit Site ↗</span>
-              <span class="preview-hint">jdmh.ph</span>
-            </div>
-          </div>
-          <div class="project-foot">
-            <div>
-              <div class="project-name">Dr. Jesus C. Delgado Memorial Hospital</div>
-              <div class="project-type">WordPress · Graphic Design · Social Media</div>
-            </div>
-            <span class="project-arrow" aria-hidden="true">↗</span>
-          </div>
-        </a>
-
-      </div>
+<article class="job reveal">
+  <div class="job-date mono">MAY 2026 — JUNE 2026</div>
+  <div>
+    <div class="job-head"><div class="job-title">(VA) WordPress Developer · Website Builder</div></div>
+    <div class="job-company">WebTree Creative LLC, US Agency</div>
+    <div class="job-meta">Part-time · Remote · WordPress Technical, GHL Support & Web Development</div>
+    <ul class="job-bullets">
+      <li>Successfully completed a complex, multi-site migration project from Siteground to WPEngine, handling challenging manual HTML/PHP site migrations and troubleshooting plugin failures for various domains (heartheircries.org, Montanacanvastarps.com, lisaraschellemontana.com.</li>
+      <li>Formally accepted the task for and assumed management of greenlakefestival.org and unitytreeandforestry.com, providing ongoing website updates, technical support, and content management.</li>
+      <li>Performs all critical WordPress maintenance tasks, including core updates, theme and plugin updates, security monitoring, and regular backups.</li>
+      <li>Optimizes website performance and page load speeds across desktop and mobile devices.</li>
+      <li>Handles technical issue resolution, such as theme conflicts and plugin errors, ensuring continuous website uptime.</li>
+      <li>Configured a WooCommerce to GoHighLevel (GHL) integration to automatically feed new customer data into contact lists and apply specific marketing tags.</li>
+      <li>Established an automated abandoned cart workflow within GoHighLevel for client accounts.</li>
+      <li>Implemented a multi-stage abandoned cart email sequence, scheduling targeted follow-ups at 1-hour, 24-hour, and 72-hour intervals.</li>
+      <li>Developed a post-purchase follow-up automation in GHL to trigger check-in and review request emails 3 days and 30 days after order shipment.</li>
+    </ul>
+    <div class="job-links">
+      <a href="https://webtreecreative.com/" target="_blank" rel="noopener noreferrer">Website: webtreecreative.com ↗</a>
+        <a href="https://www.facebook.com/webtreedevelopment/" target="_blank" rel="noopener noreferrer">Facebook Page: WebTree Creative </a>
     </div>
-  </section>
-
-  <!-- ================= SKILLS ================= -->
-  <section class="section" id="skills">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div>
-          <span class="section-num">03 — My Toolkit</span>
-          <h2 class="section-title">My Production Stack</h2>
-        </div>
-        <p class="section-sub">
-          The tools I use to build websites, improve visibility, automate workflows and produce digital content.
-        </p>
-      </div>
-
-      <div class="skills-grid">
-
-        <div class="skill-card reveal">
-          <div class="skill-label"><i aria-hidden="true"></i>CMS &amp; Website Builders</div>
-          <div class="chips">
-            <span class="chip">WordPress</span><span class="chip">Elementor Pro</span><span class="chip">Divi</span>
-            <span class="chip">Beaver Builder</span><span class="chip">Wix</span><span class="chip">GoDaddy</span>
-            <span class="chip">SiteGround</span><span class="chip">WP Engine</span><span class="chip">cPanel</span>
-          </div>
-        </div>
-
-        <div class="skill-card reveal">
-          <div class="skill-label"><i aria-hidden="true"></i>AI &amp; Generative Tools</div>
-          <div class="chips">
-            <span class="chip">ChatGPT</span><span class="chip">Claude AI</span><span class="chip">Gemini AI</span><span class="chip">Blackbox AI</span>
-          </div>
-        </div>
-
-        <div class="skill-card reveal">
-          <div class="skill-label"><i aria-hidden="true"></i>SEO &amp; Web Performance</div>
-          <div class="chips">
-            <span class="chip">Rank Math SEO</span><span class="chip">Yoast SEO</span><span class="chip">Google Analytics 4</span>
-            <span class="chip">Search Console</span><span class="chip">Semrush</span><span class="chip">SEOptimer</span>
-            <span class="chip">PageSpeed Insights</span><span class="chip">Sitechecker</span><span class="chip">DMARC Lookup</span>
-          </div>
-        </div>
-
-        <div class="skill-card reveal">
-          <div class="skill-label"><i aria-hidden="true"></i>Marketing Automation</div>
-          <div class="chips">
-            <span class="chip">GoHighLevel</span><span class="chip">Meta Pixel</span><span class="chip">Google Tag Manager</span><span class="chip">Zapier</span>
-          </div>
-        </div>
-
-        <div class="skill-card reveal">
-          <div class="skill-label"><i aria-hidden="true"></i>Design &amp; Multimedia</div>
-          <div class="chips">
-            <span class="chip">Adobe Photoshop</span><span class="chip">Figma</span><span class="chip">Adobe Illustrator</span>
-            <span class="chip">Adobe InDesign</span><span class="chip">Canva</span><span class="chip">Filmora</span>
-            <span class="chip">After Effects</span><span class="chip">Premiere Pro</span><span class="chip">Topaz AI</span>
-            <span class="chip">Remini</span><span class="chip">AI Image Generation</span><span class="chip">Videoleap</span>
-          </div>
-        </div>
-
-        <div class="skill-card reveal">
-          <div class="skill-label"><i aria-hidden="true"></i>Core Competencies</div>
-          <div class="chips">
-            <span class="chip">Clear Communication</span><span class="chip">Time Management</span>
-            <span class="chip">Adaptability</span><span class="chip">Problem Solving</span><span class="chip">Cybersecurity Basics</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= ABOUT ================= -->
-  <section class="section" id="about">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div>
-          <span class="section-num">04 — Background</span>
-          <h2 class="section-title">Education, Languages &amp; Contact</h2>
-        </div>
-      </div>
-
-      <div class="info-grid">
-
-        <div class="info-card reveal">
-          <div class="info-label">Education</div>
-          <div class="info-degree">BS in Information Technology</div>
-          <div class="info-school">Sorsogon State College, Bulan Campus · 2012–2016</div>
-        </div>
-
-        <div class="info-card reveal">
-          <div class="info-label">Languages</div>
-          <div class="lang-list">
-            <span class="lang">Bicol</span>
-            <span class="lang">Tagalog</span>
-            <span class="lang">English</span>
-          </div>
-        </div>
-
-        <div class="info-card reveal">
-          <div class="info-label">Contact</div>
-          <div class="contact-list">
-            <div>
-              <span class="lbl">Email</span>
-              <a href="mailto:gicarobrian2011maybhrai@gmail.com">gicarobrian2011maybhrai@gmail.com</a>
-            </div>
-            <div>
-              <span class="lbl">Phone</span>
-              <a href="tel:+639692133420">+63 969 213 3420</a> ·
-              <a href="tel:+639564963256">+63 956 496 3256</a>
-            </div>
-            <div>
-              <span class="lbl">Timezone</span>
-              <a href="#top">Philippines · PHT (GMT+8)</a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<!-- ================= FOOTER ================= -->
-<footer class="footer">
-  <div class="wrap">
-    <div class="footer-top">
-      <div>
-        <div class="footer-name">Brian Gicaro D.</div>
-        <p class="footer-tag">
-          WordPress &amp; Elementor Developer · SEO Specialist · GoHighLevel Automation · Graphic Design &amp; SMM
-        </p>
-      </div>
-
-      <div class="footer-links">
-        <a href="mailto:gicarobrian2011maybhrai@gmail.com">Email</a>
-        <a href="tel:+639692133420">Call</a>
-        <a href="https://www.behance.net/bg1312870049f" target="_blank" rel="noopener noreferrer">Behance</a>
-        <a href="https://linktr.ee/bhraigicaro" target="_blank" rel="noopener noreferrer">Linktree</a>
-        <a href="https://github.com/bhraigicaro" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <span>© 2026 Brian Gicaro D.</span>
-      <span>Philippines · PHT (GMT+8)</span>
-    </div>
+    <p class="job-location">Location: Missoula, MT, United States</p>
   </div>
-</footer>
+</article>
 
-<script>
-(() => {
-  const items = document.querySelectorAll('.reveal');
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (reduce || !('IntersectionObserver' in window)) {
-    items.forEach(el => el.classList.add('in'));
-    return;
-  }
+<article class="job reveal">
+  <div class="job-date mono">DEC 2025 — APRIL 2026</div>
+  <div>
+    <div class="job-head"><div class="job-title">(VA) WordPress Web Developer · Website Development &amp; Maintenance</div></div>
+    <div class="job-company">MediaZeus · Digital Marketing &amp; Web Development Agency</div>
+    <div class="job-meta">Remote · WordPress Development · Website Management</div>
+    <ul class="job-bullets">
+      <li>Built and developed the MediaZeus WordPress website, transforming project requirements and design concepts into a professional, functional and responsive website.</li>
+      <li>Developed and customized WordPress pages, layouts and website sections while maintaining consistent branding, typography, spacing and visual hierarchy.</li>
+      <li>Managed ongoing website maintenance, content updates, layout adjustments and front-end improvements to keep the website current and functional.</li>
+      <li>Optimized website layouts and components for responsive performance across desktop, tablet and mobile devices.</li>
+      <li>Improved the overall UI/UX through refined page structure, navigation, spacing, typography, visual elements and call-to-action sections.</li>
+      <li>Performed website testing, troubleshooting and front-end adjustments to identify and resolve issues affecting usability and presentation.</li>
+      <li>Implemented ongoing website enhancements based on agency requirements, ensuring the site remained aligned with MediaZeus' digital presence and business objectives.</li>
+      <li>Provided continuous WordPress development and website support, maintaining the site's functionality, appearance and overall quality.</li>
+    </ul>
+    <div class="job-links">
+      <a href="https://www.mediazeus.com/" target="_blank" rel="noopener noreferrer">Website: mediazeus.com ↗</a>
+      <a href="https://www.facebook.com/themediazeus" target="_blank" rel="noopener noreferrer">Facebook Page: MediaZeus ↗</a>
+    </div>
+    <p class="job-location">Location: 454 S. Anderson Rd, Suite 313, Rock Hill, SC 29732</p>
+  </div>
+</article>
 
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in');
-        io.unobserve(entry.target);
+
+          <article class="job reveal">
+  <div class="job-date mono">MAR 2023 — JAN 2024</div>
+  <div>
+    <div class="job-head">
+      <div class="job-title">(Corporate) Digital Content Officer · Website / SEO / GBP / Social Media</div>
+    </div>
+    <div class="job-company">Comglasco Aguila Glass Corporation</div>
+    <div class="job-meta">Full-time · Onsite · Monday–Saturday · Parañaque, Philippines</div>
+
+    <ul class="job-bullets">
+      <li>Maintained website content, product photography, and Google Business Profile listings across multiple branches, with targeted keyword optimization.</li>
+      <li>Managed social media content and publishing across Facebook, Instagram, and TikTok, including content scheduling, posting, captions, hashtags, and platform-specific optimization.</li>
+      <li>Developed and published engaging platform-specific content for the Automotive, Advertising, and Architectural industries to increase brand awareness, reach, and engagement.</li>
+      <li>Planned and organized social media content calendars and coordinated promotional posts with marketing campaigns, product launches, and sales activities.</li>
+      <li>Monitored social media channels, engaged with customers, responded to comments and inquiries, and supported customer satisfaction and lead generation.</li>
+      <li>Produced internal and external marketing collateral, promotional graphics, and sales materials for digital and offline campaigns.</li>
+      <li>Scripted, filmed, edited, and published promotional product videos showcasing product features and applications to increase social media engagement.</li>
+      <li>Collaborated with the sales team to provide marketing assets, promotional tools, and social media content supporting business objectives.</li>
+    </ul>
+
+    <div class="job-links">
+      <a href="https://www.comglasco.com/" target="_blank" rel="noopener noreferrer">Website: comglasco.com ↗</a>
+      <a href="https://www.facebook.com/comglascoaguilaglass" target="_blank" rel="noopener noreferrer">Facebook Page: Comglasco Aguila Glass 1946</a>
+    </div>
+
+    <p class="job-location">Location: Parañaque, Philippines</p>
+  </div>
+</article>
+<article class="job reveal">
+  <div class="job-date mono">JAN 2023 — OCT 2023</div>
+  <div>
+    <div class="job-head">
+      <div class="job-title">(VA) WordPress Website Developer / Designer</div>
+    </div>
+    <div class="job-company">Metropolitan Medical Center</div>
+    <div class="job-meta">Part-time Contract · Remote · Flexible Schedule</div>
+
+    <ul class="job-bullets">
+      <li>Developed, maintained, and updated the hospital website using <strong>WordPress and Elementor</strong>, including page creation, layout improvements, content updates, service pages, imagery, and doctor profiles.</li>
+      <li>Managed site-wide website content, graphics, images, and digital assets while maintaining consistent branding, accurate medical information, and a user-friendly experience.</li>
+      <li>Implemented and optimized <strong>on-page SEO</strong> elements, including page titles, meta descriptions, headings, image alt text, internal linking, keyword placement, and other search optimization requirements.</li>
+      <li>Conducted website testing, debugging, and troubleshooting across <strong>desktop, tablet, and mobile devices</strong> to ensure responsive layouts, accessibility, functionality, and cross-browser compatibility.</li>
+      <li>Monitored and optimized <strong>website performance and Core Web Vitals</strong>, addressing page-speed issues involving images, caching, render-blocking resources, scripts, and other performance factors.</li>
+      <li>Managed WordPress plugins, themes, updates, and integrations while checking for compatibility issues, plugin conflicts, and potential website functionality problems.</li>
+      <li>Managed website data infrastructure, including <strong>database maintenance, performance optimization, backups, restoration procedures, and website health checks</strong> to support data integrity and uptime.</li>
+      <li>Assisted with website hosting and technical administration, including basic hosting configuration, SSL troubleshooting, domain connectivity, deployment, and website maintenance.</li>
+      <li>Diagnosed and resolved WordPress, Elementor, plugin, layout, content, and functionality issues while minimizing website downtime and maintaining site stability.</li>
+      <li>Created and optimized website banners, graphics, images, and other digital assets to improve visual presentation, usability, and page performance.</li>
+      <li>Coordinated website content updates and digital requirements with hospital staff and departments to ensure timely publication of accurate and relevant information.</li>
+      <li>Provided ongoing website management and technical support, identifying opportunities to improve <strong>SEO, performance, accessibility, security, usability, and overall website experience</strong>.</li>
+    </ul>
+
+    <div class="job-links">
+      <a href="https://metropolitanmedicalcenter.com.ph/" target="_blank" rel="noopener noreferrer">Website: metropolitanmedicalcenter.com.ph ↗</a>
+      <a href="https://www.facebook.com/MetroMedPH/" target="_blank" rel="noopener noreferrer">Facebook Page: Metropolitan Medical Center</a>
+    </div>
+
+    <p class="job-location">Location: Manila, Philippines</p>
+  </div>
+</article>
+
+        <article class="job reveal">
+  <div class="job-date mono">JUL 2022 — MAR 2023</div>
+  <div>
+    <div class="job-head">
+      <div class="job-title">(Corporate) IT Technical Support Specialist</div>
+    </div>
+    <div class="job-company">GLP Theorem Ventures Corporation</div>
+    <div class="job-meta">Full-time · Onsite · Tuesday–Saturday · Sorsogon City, Philippines</div>
+
+    <ul class="job-bullets">
+      <li>Provided day-to-day <strong>IT technical support and troubleshooting</strong> for hardware, software, workstations, peripherals, and other technology-related issues across the organization.</li>
+      <li>Installed, configured, updated, and maintained <strong>desktop computers, laptops, workstations, and IT peripherals</strong> to ensure reliable day-to-day operations.</li>
+      <li>Performed hardware diagnostics, software troubleshooting, system updates, physical maintenance, and routine workstation health checks to minimize downtime.</li>
+      <li>Supported <strong>server environments and network infrastructure</strong>, including internet connectivity testing, network troubleshooting, structured cable management, and basic network issue resolution.</li>
+      <li>Managed <strong>user accounts, access credentials, and workstation configurations</strong>, resolving employee technical concerns through the ITarian service desk.</li>
+      <li>Logged, monitored, prioritized, and resolved technical support tickets while providing timely assistance and escalating complex issues when required.</li>
+      <li>Configured and maintained <strong>antivirus, endpoint protection, and firewall settings</strong> while supporting company IT security and safe computing practices.</li>
+      <li>Performed routine system and network checks to identify connectivity, performance, hardware, and software issues before they impacted business operations.</li>
+      <li>Assisted with the deployment, setup, configuration, replacement, and maintenance of IT equipment for employees and operational teams.</li>
+      <li>Supported <strong>IT security awareness practices</strong>, including software updates, account security, responsible system usage, and basic protection of company devices and data.</li>
+      <li>Designed <strong>graphic assets, presentations, promotional materials, and internal communication designs</strong> to support company departments and team requirements.</li>
+      <li>Created and edited <strong>promotional and internal videos</strong> for company communications, training, and marketing-related requirements.</li>
+      <li>Collaborated with internal teams to identify recurring technical issues, improve troubleshooting processes, and maintain reliable workplace technology.</li>
+      <li>Provided technical support for <strong>24/7 business operations</strong>, working across regular day and graveyard shift schedules to maintain continuous IT support and operational readiness.</li>
+    </ul>
+
+    <div class="job-links">
+      <a href="https://theoremcorp.com" target="_blank" rel="noopener noreferrer">Website: theoremcorp.com ↗</a>
+      <a href="https://www.facebook.com/glptheoremventurescorporation/" target="_blank" rel="noopener noreferrer">Facebook Page ↗</a>
+    </div>
+
+    <p class="job-location">Location: Sorsogon City, Philippines</p>
+  </div>
+</article>
+
+         <article class="job reveal">
+  <div class="job-date mono">JUL 2017 — APR 2022</div>
+  <div>
+    <div class="job-head">
+      <div class="job-title">(Corporate) Graphic Designer &amp; WordPress Website Developer / Designer</div>
+    </div>
+    <div class="job-company">Dr. Jesus C. Delgado Memorial Hospital</div>
+    <div class="job-meta">Full-time · Onsite · Monday–Friday · Quezon City, Philippines</div>
+
+    <ul class="job-bullets">
+      <li>Designed internal and external medical marketing collateral, including promotional graphics, hospital announcements, event materials, patient communication materials, and healthcare campaign assets.</li>
+      <li>Created, developed, and maintained the hospital's WordPress website, including page creation, content updates, graphics, images, and ongoing website management.</li>
+      <li>Managed website hosting and domain-related tasks, including website deployment, basic hosting configuration, backups, maintenance, and troubleshooting.</li>
+      <li>Managed Facebook content and social media posting, including creating graphics, writing captions, scheduling and publishing posts, and maintaining consistent hospital branding.</li>
+      <li>Developed social media content promoting hospital services, medical programs, events, announcements, and healthcare campaigns to increase awareness and engagement.</li>
+      <li>Scripted, filmed, edited, and produced event, promotional, and healthcare-related videos for website and social media publishing.</li>
+      <li>Conducted competitive benchmarking of hospital rates and supported online consultation platforms to improve digital service visibility.</li>
+      <li>Developed branding and corporate assets including staff uniforms, ID cards, patient satisfaction surveys, forms, and other hospital materials.</li>
+      <li>Managed patient inquiries through Facebook and supported online communication to improve engagement and customer service.</li>
+      <li>Collaborated with hospital departments and management to fulfill internal and external design requirements for marketing, communications, events, and medical campaigns.</li>
+    </ul>
+
+    <div class="job-links">
+      <a href="https://jdmh.ph/" target="_blank" rel="noopener noreferrer">Website: jdmh.ph ↗</a>
+      <a href="https://www.facebook.com/jdmhph/" target="_blank" rel="noopener noreferrer">Facebook Page ↗</a>
+    </div>
+
+    <p class="job-location">Location: Quezon City, Philippines</p>
+  </div>
+</article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio" class="reveal">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="section-num mono">02 / Selected Work</div>
+            <h2 class="section-title">Websites I've Built &amp; Managed</h2>
+          </div>
+          <p class="section-sub">11 live and completed website projects across healthcare, home services, construction, events and business. Select any card to visit the site.</p>
+        </div>
+
+        <div class="portfolio-grid">
+
+          <!-- TOTAL CLOSING SOLUTIONS -->
+          <a class="project-card reveal" style="transition-delay:.1s;" href="https://totalclosingsolutions.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Total Closing Solutions website">
+            <div class="browser-chrome">
+              <div class="chrome-dots" aria-hidden="true">
+                <span class="chrome-dot dot-red"></span>
+                <span class="chrome-dot dot-yellow"></span>
+                <span class="chrome-dot dot-green"></span>
+              </div>
+              <div class="chrome-bar">totalclosingsolutions.com</div>
+            </div>
+
+            <div class="preview-area">
+              <img
+                class="preview-img"
+                src="https://s0.wp.com/mshots/v1/https%3A%2F%2Ftotalclosingsolutions.com%2F?w=1200&v=20260815"
+                alt="Live preview of Total Closing Solutions website"
+                loading="lazy"
+                decoding="async"
+                width="1200"
+                height="675"
+              >
+              <div class="preview-overlay" aria-hidden="true">
+                <span class="preview-visit">Visit Site ↗</span>
+                <span class="preview-hint">totalclosingsolutions.com</span>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <div>
+                <div class="card-name">Total Closing Solutions</div>
+                <div class="card-type">WordPress · Elementor Pro · Remote Online Notary</div>
+              </div>
+              <span class="card-arrow" aria-hidden="true">↗</span>
+            </div>
+          </a>
+
+          <!-- COMGLASCO -->
+          <a class="project-card reveal" style="transition-delay:.2s;" href="https://www.comglasco.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit COMGLASCO Aguila Glass website">
+            <div class="browser-chrome">
+              <div class="chrome-dots" aria-hidden="true">
+                <span class="chrome-dot dot-red"></span>
+                <span class="chrome-dot dot-yellow"></span>
+                <span class="chrome-dot dot-green"></span>
+              </div>
+              <div class="chrome-bar">comglasco.com</div>
+            </div>
+
+            <div class="preview-area">
+              <img
+                class="preview-img"
+                src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fwww.comglasco.com%2F?w=1200&v=20260815"
+                alt="Live preview of COMGLASCO Aguila Glass website"
+                loading="lazy"
+                decoding="async"
+                width="1200"
+                height="675"
+              >
+              <div class="preview-overlay" aria-hidden="true">
+                <span class="preview-visit">Visit Site ↗</span>
+                <span class="preview-hint">comglasco.com</span>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <div>
+                <div class="card-name">COMGLASCO Aguila Glass</div>
+                <div class="card-type">WordPress · Website Management · SEO · Digital Content</div>
+              </div>
+              <span class="card-arrow" aria-hidden="true">↗</span>
+            </div>
+          </a>
+
+          <!-- METROPOLITAN MEDICAL CENTER -->
+          <a class="project-card reveal" style="transition-delay:.3s;" href="https://metropolitanmedicalcenter.com.ph/" target="_blank" rel="noopener noreferrer" aria-label="Visit Metropolitan Medical Center website">
+            <div class="browser-chrome">
+              <div class="chrome-dots" aria-hidden="true">
+                <span class="chrome-dot dot-red"></span>
+                <span class="chrome-dot dot-yellow"></span>
+                <span class="chrome-dot dot-green"></span>
+              </div>
+              <div class="chrome-bar">metropolitanmedicalcenter.com.ph</div>
+            </div>
+
+            <div class="preview-area">
+              <img
+                class="preview-img"
+                src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fmetropolitanmedicalcenter.com.ph%2F?w=1200&v=20260815"
+                alt="Live preview of Metropolitan Medical Center website"
+                loading="lazy"
+                decoding="async"
+                width="1200"
+                height="675"
+              >
+              <div class="preview-overlay" aria-hidden="true">
+                <span class="preview-visit">Visit Site ↗</span>
+                <span class="preview-hint">metropolitanmedicalcenter.com.ph</span>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <div>
+                <div class="card-name">Metropolitan Medical Center</div>
+                <div class="card-type">WordPress · Elementor · Website Management · SEO</div>
+              </div>
+              <span class="card-arrow" aria-hidden="true">↗</span>
+            </div>
+          </a>
+
+
+          <!-- ADDITIONAL LIVE PROJECTS -->
+          <a class="project-card reveal" href="https://wordpress-1450184-6100681.cloudwaysapps.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Our Legacy Plumbing staging website">
+            <div class="browser-chrome"><div class="chrome-dots" aria-hidden="true"><span class="chrome-dot dot-red"></span><span class="chrome-dot dot-yellow"></span><span class="chrome-dot dot-green"></span></div><div class="chrome-bar">Cloudways Staging</div></div>
+            <div class="preview-area"><img class="preview-img" src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fwordpress-1450184-6100681.cloudwaysapps.com%2F?w=1200" alt="Our Legacy Plumbing website preview" loading="lazy" decoding="async" width="1200" height="675"><div class="preview-overlay" aria-hidden="true"><span class="preview-visit">Visit Site ↗</span><span class="preview-hint">Cloudways staging</span></div></div>
+            <div class="card-footer"><div><div class="card-name">Our Legacy Plumbing</div><div class="card-type">WordPress · Elementor Pro · Plumbing</div></div><span class="card-arrow" aria-hidden="true">↗</span></div>
+          </a>
+          <a class="project-card reveal" href="https://www.loftconversionssomerset.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Loft Conversions Somerset website">
+            <div class="browser-chrome"><div class="chrome-dots" aria-hidden="true"><span class="chrome-dot dot-red"></span><span class="chrome-dot dot-yellow"></span><span class="chrome-dot dot-green"></span></div><div class="chrome-bar">loftconversionssomerset.com</div></div>
+            <div class="preview-area"><img class="preview-img" src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fwww.loftconversionssomerset.com%2F?w=1200" alt="Loft Conversions Somerset website preview" loading="lazy" decoding="async" width="1200" height="675"><div class="preview-overlay" aria-hidden="true"><span class="preview-visit">Visit Site ↗</span><span class="preview-hint">loftconversionssomerset.com</span></div></div>
+            <div class="card-footer"><div><div class="card-name">Loft Conversions Somerset</div><div class="card-type">WordPress · Elementor Pro · Construction</div></div><span class="card-arrow" aria-hidden="true">↗</span></div>
+          </a>
+          <a class="project-card reveal" href="https://greenlakefestival.org/" target="_blank" rel="noopener noreferrer" aria-label="Visit Green Lake Festival of Music website">
+            <div class="browser-chrome"><div class="chrome-dots" aria-hidden="true"><span class="chrome-dot dot-red"></span><span class="chrome-dot dot-yellow"></span><span class="chrome-dot dot-green"></span></div><div class="chrome-bar">greenlakefestival.org</div></div>
+            <div class="preview-area"><img class="preview-img" src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fgreenlakefestival.org%2F?w=1200" alt="Green Lake Festival of Music website preview" loading="lazy" decoding="async" width="1200" height="675"><div class="preview-overlay" aria-hidden="true"><span class="preview-visit">Visit Site ↗</span><span class="preview-hint">greenlakefestival.org</span></div></div>
+            <div class="card-footer"><div><div class="card-name">Green Lake Festival of Music</div><div class="card-type">WordPress · Elementor Pro · Music Events</div></div><span class="card-arrow" aria-hidden="true">↗</span></div>
+          </a>
+          <a class="project-card reveal" href="https://unitytreeandforestry.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Unity Tree and Forestry website">
+            <div class="browser-chrome"><div class="chrome-dots" aria-hidden="true"><span class="chrome-dot dot-red"></span><span class="chrome-dot dot-yellow"></span><span class="chrome-dot dot-green"></span></div><div class="chrome-bar">unitytreeandforestry.com</div></div>
+            <div class="preview-area"><img class="preview-img" src="https://s0.wp.com/mshots/v1/https%3A%2F%2Funitytreeandforestry.com%2F?w=1200" alt="Unity Tree and Forestry website preview" loading="lazy" decoding="async" width="1200" height="675"><div class="preview-overlay" aria-hidden="true"><span class="preview-visit">Visit Site ↗</span><span class="preview-hint">unitytreeandforestry.com</span></div></div>
+            <div class="card-footer"><div><div class="card-name">Unity Tree &amp; Forestry</div><div class="card-type">WordPress · Elementor Pro · Environmental Services</div></div><span class="card-arrow" aria-hidden="true">↗</span></div>
+          </a>
+          <a class="project-card reveal" href="https://nextgenerationinsulation.co.uk/" target="_blank" rel="noopener noreferrer" aria-label="Visit Next Generation Insulation website">
+            <div class="browser-chrome"><div class="chrome-dots" aria-hidden="true"><span class="chrome-dot dot-red"></span><span class="chrome-dot dot-yellow"></span><span class="chrome-dot dot-green"></span></div><div class="chrome-bar">nextgenerationinsulation.co.uk</div></div>
+            <div class="preview-area"><img class="preview-img" src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fnextgenerationinsulation.co.uk%2F?w=1200" alt="Next Generation Insulation website preview" loading="lazy" decoding="async" width="1200" height="675"><div class="preview-overlay" aria-hidden="true"><span class="preview-visit">Visit Site ↗</span><span class="preview-hint">nextgenerationinsulation.co.uk</span></div></div>
+            <div class="card-footer"><div><div class="card-name">Next Generation Insulation Ltd.</div><div class="card-type">WordPress · Elementor Pro · Contractor Services</div></div><span class="card-arrow" aria-hidden="true">↗</span></div>
+          </a>
+          <a class="project-card reveal" href="https://dr-prettyfacesatla-jingjing.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="Visit Pretty Faces Atlanta website">
+            <div class="browser-chrome"><div class="chrome-dots" aria-hidden="true"><span class="chrome-dot dot-red"></span><span class="chrome-dot dot-yellow"></span><span class="chrome-dot dot-green"></span></div><div class="chrome-bar">Pretty Faces Atlanta</div></div>
+            <div class="preview-area"><img class="preview-img" src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fdr-prettyfacesatla-jingjing.netlify.app%2F?w=1200" alt="Pretty Faces Atlanta website preview" loading="lazy" decoding="async" width="1200" height="675"><div class="preview-overlay" aria-hidden="true"><span class="preview-visit">Visit Site ↗</span><span class="preview-hint">Medical aesthetics</span></div></div>
+            <div class="card-footer"><div><div class="card-name">Pretty Faces Atlanta</div><div class="card-type">Custom HTML · CSS · Medical Aesthetics</div></div><span class="card-arrow" aria-hidden="true">↗</span></div>
+          </a>
+          <a class="project-card reveal" href="https://briangicaro2026wpwebsites-mockup.github.io/pcangbuilders.com.sg/" target="_blank" rel="noopener noreferrer" aria-label="Visit PC Ang Builders website">
+            <div class="browser-chrome"><div class="chrome-dots" aria-hidden="true"><span class="chrome-dot dot-red"></span><span class="chrome-dot dot-yellow"></span><span class="chrome-dot dot-green"></span></div><div class="chrome-bar">PC Ang Builders</div></div>
+            <div class="preview-area"><img class="preview-img" src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fbriangicaro2026wpwebsites-mockup.github.io%2Fpcangbuilders.com.sg%2F?w=1200" alt="PC Ang Builders website preview" loading="lazy" decoding="async" width="1200" height="675"><div class="preview-overlay" aria-hidden="true"><span class="preview-visit">Visit Site ↗</span><span class="preview-hint">Construction website</span></div></div>
+            <div class="card-footer"><div><div class="card-name">PC Ang Builders</div><div class="card-type">WordPress · Elementor Pro · Construction</div></div><span class="card-arrow" aria-hidden="true">↗</span></div>
+          </a>
+
+          <!-- JDMH -->
+          <a class="project-card reveal" style="transition-delay:.4s;" href="https://jdmh.ph/" target="_blank" rel="noopener noreferrer" aria-label="Visit Dr. Jesus C. Delgado Memorial Hospital website">
+            <div class="browser-chrome">
+              <div class="chrome-dots" aria-hidden="true">
+                <span class="chrome-dot dot-red"></span>
+                <span class="chrome-dot dot-yellow"></span>
+                <span class="chrome-dot dot-green"></span>
+              </div>
+              <div class="chrome-bar">jdmh.ph</div>
+            </div>
+
+            <div class="preview-area">
+              <img
+                class="preview-img"
+                src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fjdmh.ph%2F?w=1200&v=20260815"
+                alt="Live preview of Dr. Jesus C. Delgado Memorial Hospital website"
+                loading="lazy"
+                decoding="async"
+                width="1200"
+                height="675"
+              >
+              <div class="preview-overlay" aria-hidden="true">
+                <span class="preview-visit">Visit Site ↗</span>
+                <span class="preview-hint">jdmh.ph</span>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <div>
+                <div class="card-name">Dr. Jesus C. Delgado Memorial Hospital</div>
+                <div class="card-type">WordPress · Graphic Design · Social Media</div>
+              </div>
+              <span class="card-arrow" aria-hidden="true">↗</span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="reveal">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="section-num mono">03 / My Toolkit</div>
+            <h2 class="section-title">My Production Stack</h2>
+          </div>
+          <p class="section-sub">The tools I use to build websites, improve visibility, automate workflows and produce digital content.</p>
+        </div>
+
+        <div class="skill-groups">
+
+          <div class="skill-card reveal">
+            <div class="skill-group-label"><span class="dot"></span>CMS &amp; WEBSITE BUILDER</div>
+            <div class="chip-row">
+              <span class="chip">WordPress</span><span class="chip">Elementor Pro</span><span class="chip">Divi</span>
+              <span class="chip">Beaver Builder</span><span class="chip">Wix</span><span class="chip">GoDaddy</span>
+              <span class="chip">SiteGround</span><span class="chip">WP Engine</span><span class="chip">cPanel</span>
+            </div>
+          </div>
+
+          <div class="skill-card reveal">
+            <div class="skill-group-label"><span class="dot"></span>AI &amp; GENERATIVE TOOLS</div>
+            <div class="chip-row">
+              <span class="chip">ChatGPT</span><span class="chip">Claude AI</span><span class="chip">Gemini AI</span><span class="chip">Blackbox AI</span>
+            </div>
+          </div>
+
+          <div class="skill-card reveal">
+            <div class="skill-group-label"><span class="dot"></span>SEO &amp; WEB PERFORMANCE</div>
+            <div class="chip-row">
+              <span class="chip">Rank Math SEO</span><span class="chip">Yoast SEO</span><span class="chip">Google Analytics 4</span>
+              <span class="chip">Search Console</span><span class="chip">Semrush</span><span class="chip">SEOptimer</span>
+              <span class="chip">PageSpeed Insights</span><span class="chip">Sitechecker</span><span class="chip">DMARC Lookup</span>
+            </div>
+          </div>
+
+          <div class="skill-card reveal">
+            <div class="skill-group-label"><span class="dot"></span>MARKETING AUTOMATION</div>
+            <div class="chip-row">
+              <span class="chip">GoHighLevel</span><span class="chip">Meta Pixel</span><span class="chip">Google Tag Manager</span><span class="chip">Zapier</span>
+            </div>
+          </div>
+
+          <div class="skill-card reveal">
+            <div class="skill-group-label"><span class="dot"></span>DESIGN &amp; MULTIMEDIA</div>
+            <div class="chip-row">
+              <span class="chip">Adobe Photoshop</span><span class="chip">Figma</span><span class="chip">Adobe Illustrator</span>
+              <span class="chip">Adobe InDesign</span><span class="chip">Canva</span><span class="chip">Filmora</span>
+              <span class="chip">After Effects</span><span class="chip">Premiere Pro</span><span class="chip">Topaz AI</span>
+              <span class="chip">Remini</span><span class="chip">AI Image Generation</span><span class="chip">Videoleap</span>
+            </div>
+          </div>
+
+          <div class="skill-card reveal">
+            <div class="skill-group-label"><span class="dot"></span>CORE COMPETENCIES</div>
+            <div class="chip-row">
+              <span class="chip">Clear Communication</span><span class="chip">Time Management</span>
+              <span class="chip">Adaptability</span><span class="chip">Problem Solving</span><span class="chip">Cybersecurity Basics</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="reveal">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <div class="section-num mono">04 / Background</div>
+            <h2 class="section-title">Education, Languages &amp; Contact</h2>
+          </div>
+        </div>
+
+        <div class="info-strip">
+          <div class="info-card reveal">
+            <div class="k">Education</div>
+            <div class="degree">BS in Information Technology</div>
+            <div class="school">Sorsogon State College, Bulan Campus · 2012–2016</div>
+          </div>
+
+          <div class="info-card reveal">
+            <div class="k">Languages</div>
+            <div class="lang-list">
+              <span class="lang-pill">Bicol</span>
+              <span class="lang-pill">Tagalog</span>
+              <span class="lang-pill">English</span>
+            </div>
+          </div>
+
+          <div class="info-card reveal">
+            <div class="k">Contact</div>
+            <div class="contact-list">
+              <div><span class="lbl">Email</span><a href="mailto:gicarobrian2011maybhrai@gmail.com">gicarobrian2011maybhrai@gmail.com</a></div>
+              <div><span class="lbl">Phone</span><a href="tel:+639692133420">+63 969 213 3420</a> · <a href="tel:+639564963256">+63 956 496 3256</a></div>
+              <div><span class="lbl">Timezone</span>Philippines · PHT (GMT+8)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-top">
+        <div>
+          <div class="foot-name">Brian Gicaro D.</div>
+          <div class="foot-tag">WordPress &amp; Elementor Developer · SEO Specialist · GoHighLevel Automation · Graphic Design &amp; SMM</div>
+        </div>
+
+        <div class="foot-links">
+          <a href="mailto:gicarobrian2011maybhrai@gmail.com">Email</a>
+          <a href="tel:+639692133420">Call</a>
+          <a href="https://www.behance.net/bg1312870049f" target="_blank" rel="noopener noreferrer">Behance</a>
+          <a href="https://linktr.ee/bhraigicaro" target="_blank" rel="noopener noreferrer">Linktree</a>
+          <a href="https://github.com/bhraigicaro" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+
+      <div class="foot-bottom">
+        <span>© 2026 Brian Gicaro D.</span>
+        <span>Philippines · PHT (GMT+8)</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      const items = document.querySelectorAll('.reveal');
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (reducedMotion || !('IntersectionObserver' in window)) {
+        items.forEach(el => el.classList.add('is-in'));
+        document.querySelector('.timeline')?.classList.add('line-in');
+        return;
       }
-    });
-  }, {
-    threshold: 0.08,
-    rootMargin: '0px 0px -50px 0px'
-  });
 
-  items.forEach(el => io.observe(el));
+      const groups = new Map();
 
-  /* Sticky nav shadow on scroll */
-  const nav = document.querySelector('.nav');
-  const onScroll = () => {
-    nav.style.boxShadow = window.scrollY > 12
-      ? '0 12px 30px -22px rgba(0,0,0,.9)'
-      : 'none';
-  };
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
-})();
-</script>
+      items.forEach(el => {
+        const parent = el.parentElement;
+        if (!groups.has(parent)) groups.set(parent, []);
+        groups.get(parent).push(el);
+      });
+
+      groups.forEach(list => {
+        list.forEach((el, index) => {
+          if (!el.style.transitionDelay) {
+            el.style.transitionDelay = `${Math.min(index * 0.08, 0.4)}s`;
+          }
+        });
+      });
+
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-in');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.08,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      items.forEach(item => observer.observe(item));
+
+      const timeline = document.querySelector('.timeline');
+
+      if (timeline) {
+        const lineObserver = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              timeline.classList.add('line-in');
+              obs.unobserve(timeline);
+            }
+          });
+        }, { threshold: 0.05 });
+
+        lineObserver.observe(timeline);
+      }
+
+      document.querySelectorAll('.hero .eyebrow, .hero h1, .hero .role-tag, .hero .lede, .hero .cta-row, .hero .badge-card')
+        .forEach(el => {
+          el.addEventListener('animationend', () => {
+            el.style.animation = 'none';
+          }, { once: true });
+        });
+    })();
+  </script>
 </body>
 </html>
